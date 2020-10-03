@@ -1,6 +1,10 @@
 
-
+from app.util.util import *s
 class DB:
+    def __init__(self, roll_no, token=None):
+        self.roll_no = roll_no
+        self.token = token
+
     def registered_user(self):
         return "nothing"
     
@@ -17,4 +21,6 @@ class DB:
         return "nothing"
     
     def create_assignment_entry(self):
+        return "nothing"
+    def task_task_entry(self):
         return "nothing"
