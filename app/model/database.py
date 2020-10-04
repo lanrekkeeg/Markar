@@ -13,17 +13,21 @@ class DB:
         """
         it will create database base on configuration value
         """
+        self.log.debug("creating connection")
         try:
             cnx = mysql.connector.connect(user=USER,password=PASS,host=MysqlAddress,
                                         database=DBName)
         except mysql.connector.Error as err:
+            self.log.debug("Erro")
             if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
                 print("Something is wrong with your user name or password")
             elif err.errno == errorcode.ER_BAD_DB_ERROR:
                 print("Database does not exist")
             else:
                 print(err)
-        return "successfully establish connection"
+        else:
+            self.log.debug("Created successfully")
+            return "successfully establish connection"
         
 
     def registered_user(self):

@@ -1,0 +1,31 @@
+Daniyal,p180043,p180043@nu.edu.pk,44
+Usman Ahmad,p180066,p180066@nu.edu.pk,45
+Asmar Ali,p180117,p180117@nu.edu.pk,46
+Hassaan Ahmad,p180120,p180120@nu.edu.pk,47
+Sarim Yawar,p190001,p190001@nu.edu.pk,48
+Farkhanda Saleem,p190004,p190004@nu.edu.pk,49
+Sawera Yousaf,p190007,p190007@nu.edu.pk,50
+Aitzaz Tahir,p190012,p190012@nu.edu.pk,51
+Ammaar Ahmed,p190016,p190016@nu.edu.pk,52
+Mohammad Junaid,p190025,p190025@nu.edu.pk,53
+Najam Aqeel,p190035,p190035@nu.edu.pk,54
+Muhammad Abdullah,p190036,p190036@nu.edu.pk,55
+Tayyab Mansoor,p190043,p190043@nu.edu.pk,56
+Qasim Mansoor,p190055,p190055@nu.edu.pk,57
+Muhammad Abeer,p190061,p190061@nu.edu.pk,58
+Abuzar Zulfiqar,p190062,p190062@nu.edu.pk,59
+Abdullah Tahir,p190067,p190067@nu.edu.pk,60
+Usman Manzoor,p190068,p190068@nu.edu.pk,61
+Ahmed Raza,p190070,p190070@nu.edu.pk,62
+Mohsin Raza,p190072,p190072@nu.edu.pk,63
+Nauman Tasawar,p190073,p190073@nu.edu.pk,64
+Hassan Bilal,p190083,p190083@nu.edu.pk,65
+Asjid Tahir,p190085,p190085@nu.edu.pk,66
+Javed Iqbal,p190088,p190088@nu.edu.pk,67
+M Moeed,p190089,p190089@nu.edu.pk,68
+Osama Asghar,p190092,p190092@nu.edu.pk,69
+Muhammad Usman,p190096,p190096@nu.edu.pk,70
+Tahawar Ihsan,p190097,p190097@nu.edu.pk,71
+Ibrar Babar,p190104,p190104@nu.edu.pk,72
+Abdul Wasey,p190113,p190113@nu.edu.pk,73
+Zulqarnain,p190119,p190119@nu.edu.pk,74

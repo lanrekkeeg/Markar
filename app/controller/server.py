@@ -10,9 +10,18 @@ logging.basicConfig(level=logging.DEBUG)
 api = Flask(__name__)
 
 @api.route('/test',methods=['POST'])
+def test():
+    """Register user in database"""
+    driver = Main("db","p156058", "p156058",logging,"test")
+    driver.driver_function()
+    return flask.jsonify({"output":driver.output})
+
+@api.route('/grade',methods=['POST'])
 def post():
     """Register user in database"""
-    driver = Main("p156058", "p156058",logging)
-    out = driver.driver_function("test")
-    return flask.jsonify({"output":out})
+    driver = Main("grade","p156058", "p156058",logging)
+    driver.driver_function("test")
+    return flask.jsonify({"output":driver.output})
+
+
         
