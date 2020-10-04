@@ -3,11 +3,12 @@ from app.util.util import *
 from app.configuration.config import *
 import mysql.connector
 class DB:
-    def __init__(self, roll_no,logging, token=None):
+    def __init__(self, roll_no,logging,student_name=None, token=None):
         self.roll_no = roll_no
         self.token = token
         self.db_con = None
         self.log = logging
+        self.student_name = student_name
 
     def create_connection(self):
         """
@@ -15,7 +16,7 @@ class DB:
         """
         self.log.debug("creating connection")
         try:
-            cnx = mysql.connector.connect(user=USER,password=PASS,host=MysqlAddress,
+            self.db_con = mysql.connector.connect(user=USER,password=PASS,host=MysqlAddress,
                                         database=DBName)
         except mysql.connector.Error as err:
             self.log.debug("Erro")
@@ -30,10 +31,44 @@ class DB:
             return "successfully establish connection"
         
 
-    def registered_user(self):
-        return "nothing"
     
-    def validate_user(self):
+    
+    def validate_admin(self):
+        """
+        validate wheather particular person is admin or not
+        """
+        cursor = self.db_con.cursor()
+        query = ("SELECT * FROM administrator "
+         "WHERE token ==%s")
+        cursor.execute(query, (self.token))
+        res = cursor.fetchone()
+            if res == 0:
+                return False
+            else:
+                return True
+
+    def registered_user(self):
+        """
+        Adding new user to db
+        """
+        token = generate_token()
+        email = convert_into_email(self.roll_no)
+        add_students = ("INSERT INTO STUDENTS "
+               "(STUDENT_NAME, ROLL_NO, EMAIL, TOKEN) "
+               "VALUES (%s, %s, %s, %s)")
+        student_data = (self.student_name, self.roll_no, email, token)
+        cursor.execute(add_students, student_data)
+        self.db_con.commit()
+
+    def validate_user(self, student_token):
+        """
+        validate wheather particular person is admin or not
+        """
+        cursor = self.db_con.cursor()
+        query = ("SELECT * FROM STUDENTS "
+         "WHERE token ==%s"
+        cursor.execute(query,())
+
         return "nothing"
     
     def get_assignment_metadata(self):

@@ -8,6 +8,7 @@ class Main:
         self.log = logging
         self.email = email
         self.output = None
+        self.auth = False
         if service_type == "db":
             self.service = DatabaseService(self.email,self.roll_no,self.log, operation, token)
         elif service_type == "grade":

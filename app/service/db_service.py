@@ -15,8 +15,8 @@ class DatabaseService:
     def run(self, driver):
         if self.operation == "register_user":
             driver.output = self.database.registered_user()
-        if self.operation == "test":
-            driver.output = self.database.create_connection()
+        if self.operation == "validate_admin":
+            driver.auth = self.database.validate_admin()
 
 
 
