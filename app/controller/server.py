@@ -85,7 +85,7 @@ def submit_test():
         return flask.jsonify({"output": UnAuthorized admin})
 
 @api.route('/SubmitFinal',methods=['POST'])
-def submit_test():
+def submit_final():
     try:
         data = request.get_json()
     except Exception as e:
