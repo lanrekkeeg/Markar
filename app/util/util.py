@@ -1,5 +1,7 @@
 from uuid import uuid4
 import re
+import smtplib, ssl
+from app.configuration.config import *
 def generate_token():
     """
     this function will generate token for user
@@ -16,3 +18,24 @@ def convert_into_email(roll_no):
     roll_clean = re.sub(r"-", "", roll_no)
     email = roll_clean+"@nu.edu.pk"
     return email
+
+def read_password():
+    """
+    reading password from file
+    """
+    with open(passwordfile,'r') as handle:
+        read = handle.read()
+        return read
+
+def send_mail(sender, receiver, message):
+    """
+    sending message to student
+    """
+    password = read_password()
+    port = 465  # For SSL
+    smtp_server = "smtp.gmail.com"
+    context = ssl.create_default_context()
+    with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
+        server.login(sender, password)
+        server.sendmail(sender, receiver, message)
+        print("Email sent")
