@@ -21,17 +21,24 @@ class DatabaseService:
             self.log.debug("Calling register function")
             self.log.debug("Service:{}{}".format(self.roll_no,self.email))
             driver.output = self.database.register_user()
+
         if self.operation == "add_admin":
             driver.output = self.database.add_admin()
+
         if self.operation == "validate":
             if self.user_type == "ADMIN":
                 driver.auth = self.database.validate_admin()
             if self.user_type == "STUDENTS":
+
                 driver.auth = self.database.validate_student()
         if self.operation == "course_code":
             driver.output = self.database.add_course_code()
+
         if self.operation == "add_student_to_course":
             driver.output = self.database.add_student_to_course()
+        
+        if self.operation == "add_task":
+            driver.output = self.database.add_task()
 
         
 

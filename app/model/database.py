@@ -193,6 +193,15 @@ class DB:
         cursor.execute(query,(self.token))
 
         return "nothing"
+    def check_if_task_exist(self):
+        """
+        check if task already exist
+        """
+    def add_task():
+        """
+        Adding new task
+        """
+
     
     def get_assignment_metadata(self):
         return "nothing"
