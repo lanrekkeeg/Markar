@@ -2,6 +2,8 @@
 from app.util.util import *
 from app.configuration.config import *
 import mysql.connector
+from mysql.connector import errorcode
+
 class DB:
     def __init__(self, roll_no=None,logging=None,email=None, token=None,request_data=None, user_type=None):
         self.log = logging
@@ -37,10 +39,7 @@ class DB:
             self.log.info("Created successfully")
             return db_con
             #return "successfully establish connection"
-        
-
-    
-    
+            
     def validate_admin(self):
         """
         validate wheather particular person is admin or not
@@ -48,11 +47,11 @@ class DB:
 
         cursor = self.db_con.cursor()
         query = ("SELECT * FROM "+self.user_type+
-         " WHERE token=%s")
+         " WHERE EMAIL=%s and TOKEN=%s")
         self.log.debug("Query:{}".format(query))
-        cursor.execute(query, (self.token,))
+        cursor.execute(query, (self.email,self.token))
         res = cursor.fetchone()
-        self.log.debug("Result from validate admin table {}".format(res))
+        self.log.debug("Result from validate {} table {}".format(self.user_type,res))
         if res is None:
             return False
         else:

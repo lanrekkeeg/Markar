@@ -26,11 +26,9 @@ class DatabaseService:
             driver.output = self.database.add_admin()
 
         if self.operation == "validate":
-            if self.user_type == "ADMIN":
+            #if self.user_type == "ADMIN":
                 driver.auth = self.database.validate_admin()
-            if self.user_type == "STUDENTS":
-
-                driver.auth = self.database.validate_student()
+            #if self.user_type == "STUDENTS":
         if self.operation == "course_code":
             driver.output = self.database.add_course_code()
 

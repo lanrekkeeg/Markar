@@ -2,7 +2,11 @@ from uuid import uuid4
 import re
 import smtplib, ssl
 from app.configuration.config import *
-
+import os
+import logging
+import yaml
+import os
+logging.basicConfig(level=logging.DEBUG)
 ALLOWED_EXTENSIONS = ['cpp']
 
 def generate_token():
@@ -46,3 +50,42 @@ def send_mail(sender, receiver, message):
         server.login(sender, password)
         server.sendmail(sender, receiver, message)
         print("Email sent")
+    
+def validate_create_folder(data):
+    """
+    This function will create task folder / course folder / section folder / submission
+    """
+         # check if course folder exist
+    type_ = data["type"]
+    number = data["number"]
+    total_que = data['questions']
+    course_code = data["coursecode"]
+    try:
+        section = data["section"]
+    except Exception as ex:
+        section = None
+    question = data['questions']
+    base_path = storage+course_code+"/"+type_
+    logging.debug(base_path)
+    if (os.path.exists(base_path)):
+        # Creaating task folder
+        logging.debug("Dir exists")
+        task_path = base_path + "/" + type_ + "-" + str(number)
+        try:
+            os.mkdir(task_path)
+        except Exception as exp:
+            logging.debug("Got Exception:{}".format(str(exp)))
+        for num_ in range(total_que):
+            question_path = task_path + "/" + section + "/Q-"+ str(num_+1) + "/submission"
+            try:
+                os.makedirs(question_path)
+            except Exception as exp:
+                logging.debug("Got Exception:{}".format(str(exp)))
+            test_cases = task_path + "/" + section + "/Q-"+ str(num_+1) + "/test"
+            try:
+                os.makedirs(test_cases)
+            except Exception as exp:
+                logging.debug("Got Exception:{}".format(str(exp)))
+
+
+        
