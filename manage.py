@@ -8,7 +8,7 @@ manager = Manager(api)
 
 @manager.command
 def run():
-    api.run('0.0.0.0',debug=True)
+    api.run('0.0.0.0',port=8080,debug=True)
 
 @manager.command
 def test():

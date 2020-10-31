@@ -14,7 +14,7 @@ class DatabaseService:
         self.operation = operation
         self.payload = request_data
         self.log.debug("{}{}".format(self.roll_no,self.email))
-        self.database = DB(roll_no=self.roll_no,logging=self.log,request_data=self.payload, token=self.token,user_type=self.user_type,email=self.email)
+        self.database = DB(logging=self.log,request_data=self.payload, token=self.token,user_type=self.user_type,email=self.email)
     
     def run(self, driver):
         if self.operation == "register":
@@ -35,8 +35,25 @@ class DatabaseService:
         if self.operation == "add_student_to_course":
             driver.output = self.database.add_student_to_course()
         
-        if self.operation == "add_task":
-            driver.output = self.database.add_task()
+        if self.operation == "check_student_in_course":
+            driver.output = self.database.check_student_registeration()
+        
+        if self.operation == "check_assignmnet_deadline":
+            driver.output = self.database.check_assignmnet_deadline()
+        
+        if self.operation == "add_task_assign":
+            driver.output = self.database.add_task_assignm()
+        
+        if self.operation == "check_course":
+            driver.output = self.database.check_course_code_exist()
+        
+        if self.operation == "check_task_assignment":
+            driver.output = self.database.check_assing_task_exist()
+        
+        if self.operation == "update_score":
+            driver.output = self.database.update_score()
+
+
 
         
 

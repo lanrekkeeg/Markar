@@ -1,0 +1,7 @@
+1. http://localhost:8080/RegisterStudent
+    Body:
+    {
+     "admin_email": "p156058@nu.edu.pk",
+	 "roll_no": "P156058",
+     "email": "P156058@nu.edu.pk"
+}

@@ -4,3 +4,4 @@ Flask-Script==2.0.6
 schedule
 PyYAML
 jsons
+mysql-connector-python

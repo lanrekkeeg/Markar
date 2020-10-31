@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+	<testsuite name="TestSequenceFunctions-20201024181536" tests="5" file=".py" time="0.006" timestamp="2020-10-24T18:15:36" failures="0" errors="0" skipped="1">
+		<testcase classname="TestSequenceFunctions" name="test_choice" time="0.004" timestamp="2020-10-24T18:15:36" file="test3.py" line="26"/>
+		<testcase classname="TestSequenceFunctions" name="test_sample" time="0.001" timestamp="2020-10-24T18:15:36" file="test3.py" line="30"/>
+		<testcase classname="TestSequenceFunctions" name="test_shuffle" time="0.001" timestamp="2020-10-24T18:15:36" file="test3.py" line="14"/>
+		<testcase classname="TestSequenceFunctions" name="test_sum" time="0.000" timestamp="2020-10-24T18:15:36" file="test3.py" line="23"/>
+		<testcase classname="TestSequenceFunctions" name="test_skipped" time="0.000" timestamp="2020-10-24T18:15:36" file="test3.py" line="10">
+			<skipped type="skip" message="demonstrating skipping"/>
+		</testcase>
+	</testsuite>
+</testsuites>

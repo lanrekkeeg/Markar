@@ -6,6 +6,8 @@ from app.util.util import  *
 import logging
 import yaml
 import os
+import json
+
 logging.basicConfig(level=logging.DEBUG)
 
 # need to import the base level configuration
@@ -18,9 +20,7 @@ api.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 def test():
     """Register user in database"""
 
-    
     try:
-        import json
         json_of_metadatas = request.form.to_dict(flat=False)
         data = json_of_metadatas['data'][0]
         data = json.loads(data)
@@ -28,47 +28,27 @@ def test():
         
     except Exception as exp:
         logging.error("Got error in feteching json data {}".format(str(exp)))
-    # checking
-
-    # create necassary folders
-    validate_create_folder(data)
-
-    #databse insertion
-
-    ## check if 
-    input1 = request.files['upload_file']
-    print("Name ",input1.filename)
-    print(input1)
-    #input1.save(os.getcwd()+input1.filename)
-    '''
-    input1 = request.files['input1']
-    output1 = request.files.get('output1')
-    input2 = request.files.get('input2')
-    output2 = request.files.get('output2')
-    print("Name ",input1.filename)
-    return "nothing"
-    output1.save(os.getcwd()+input1.filename)
-    '''
-   
-    # TODO
-    # 1. Authenticate user
-    # 2. check courese
-    # 3. check if teacher is studying that course 
-    # 4. check if folder exist
-    #   . code
-    #     . section
-    #       . task-no
-    #         . solution
-    #         . submissions
-    #           . roll_no/email
-    #           . autograder_results/logs
-    #  incase of student submission
-    #   check for assignment/ task deadline
-    #   check section
-    #   check submission count
-    #   create /code/section/task-no/Q-1/submission/roll-no
-    #   create /code/section/task-no/Q-1/submission/autograder_result
-
+    if request.headers.get("authorization") is not None:
+        # validating admin
+        logging.debug("check for authorization")
+        logging.debug("Token is {}".format(request.headers.get("authorization")))
+        driver_Admin = Main(service="db", log=logging, email=data['email'], token=request.headers.get("authorization"), user_type="ADMIN", operation="validate")
+        driver_Admin.driver_function()
+        if driver_Admin.auth:
+            logging.debug("Autthorized Admin")
+            driver_Admin = Main(service="db", log=logging, request_data=data, user_type="ADMIN", operation="check_course")
+            driver_Admin.driver_function()
+            if not driver_Admin.output:
+                logging.debug("Course Exist")
+                driver_Admin = Main(service="db", log=logging, request_data=data, user_type="ADMIN", operation="check_task_assignment")
+                driver_Admin.driver_function()
+                if driver_Admin.output:
+                    logging.debug("Creating task/Assign as it does not exist")
+                    test_case_path = validate_create_folder(data)
+                    test_cases = request.files['upload_file']
+                    test_cases.save(test_case_path+'/'+test_cases.filename)
+                    driver_Admin.update_data(request_data= data,operation="add_task_assign")
+                    driver_Admin.driver_function()
     
     # if you want to save it
     #picture.save('path/to/save')
@@ -76,9 +56,9 @@ def test():
     return 'ok', 200
    # return flask.jsonify({"output":driver.output})
 
-@api.route('/CourseCode',methods=['POST'])
+@api.route('/AddCourse',methods=['POST'])
 def add_course_code():
-    """Register user in database"""
+    """AddingCourse in the autograder database"""
     try:
         data = request.get_json()
     except Exception as e:
@@ -86,7 +66,7 @@ def add_course_code():
     if request.headers.get("authorization") is not None:
         # validating admin
         logging.debug("Token is {}".format(request.headers.get("authorization")))
-        driver_Admin = Main(service="db", log=logging, email=data['email'], token=request.headers.get("authorization"), user_type="ADMIN", operation="validate")
+        driver_Admin = Main(service="db", log=logging, email=data['admin_email'], token=request.headers.get("authorization"), user_type="ADMIN", operation="validate")
         driver_Admin.driver_function()
         if driver_Admin.auth:
             logging.debug("Autthorized Admin")
@@ -112,10 +92,11 @@ def add_student_to_course():
     if request.headers.get("authorization") is not None:
         # validating admin
         logging.debug("Token is {}".format(request.headers.get("authorization")))
-        driver_Admin = Main(service="db", log=logging,email=data['email'], token=request.headers.get("authorization"), user_type="ADMIN", operation="validate")
+        driver_Admin = Main(service="db", log=logging,email=data['admin_email'], token=request.headers.get("authorization"), user_type="ADMIN", operation="validate")
         driver_Admin.driver_function()
         if driver_Admin.auth:
             logging.debug("Autthorized Admin")
+            # first needs to check if student is registered or not
             driver_Admin.update_data(request_data= data,operation="add_student_to_course")
             driver_Admin.driver_function()
             return flask.jsonify({"output":driver_Admin.output})
@@ -145,7 +126,6 @@ def add_task():
             driver_Admin.update_data(request_data= data,operation="add_task")
             driver_Admin.driver_function()
             return flask.jsonify({"output":driver_Admin.output})
-
         else:
             return flask.jsonify({"output": "UnAuthorized admin"})
     return flask.jsonify({"output":"TOKEN IS MISSING"})
@@ -159,29 +139,30 @@ def register_student():
     """Register user in database"""
     try:
         data = request.get_json()
+        #driver_Admin = None
     except Exception as e:
         logging.error("error in decoding data coming through request, the error message is {}".format(str(e)))
     if request.headers.get("authorization") is not None:
         # validating admin
         logging.debug("Token is {}".format(request.headers.get("authorization")))
-        driver_Admin = Main(service="db", log=logging, email=data['email'],token=request.headers.get("authorization"), user_type="ADMIN", operation="validate")
+        driver_Admin = Main(service="db", log=logging, email=data['admin_email'],token=request.headers.get("authorization"), user_type="ADMIN", operation="validate")
         driver_Admin.driver_function()
         if driver_Admin.auth:
             logging.debug("Autthorized Admin")
-            roll_no = data['roll_no']
+            # CHECKING IF STUDENT IS REGISTERED IN AUTOGRADER
+            name = data['name']
             email = data['email']
-            logging.debug("Serverr:{}{}".format(roll_no,email))
+            logging.debug("Serverr:{}{}".format(name,email))
             logging.debug("Adding new user")
-            driver_Admin.update_data(roll_no=roll_no, email=email, operation="register")
+            driver_Admin.update_data(request_data=data, name=name, email=email, operation="register")
             driver_Admin.driver_function()
-
         else:
             return flask.jsonify({"output": "UnAuthorized admin"})
-    return flask.jsonify({"output":request.headers.get('authorization')})
+    #return flask.jsonify({"output":request.headers.get('authorization')})
 
     #driver = Main("db","p156058", "p156058",logging,"test")
     #driver.driver_function()
-    return flask.jsonify({"output":driver.output})
+    return flask.jsonify({"output":driver_Admin.output})
 
 
 @api.route('/AddAssignment',methods=['POST'])
@@ -205,26 +186,36 @@ def submit_test():
     """
     Test submission
     """
+    out = str()
     try:
-        data = request.get_json()
+        json_of_metadatas = request.form.to_dict(flat=False)
+        data = json_of_metadatas['data'][0]
+        data = json.loads(data)
     except Exception as e:
         logging.error("error in decoding data coming through request, the error message is {}".format(str(e)))
     if request.headers.get("authorization") is not None:
         # validating admin
         logging.debug("Token is {}".format(request.headers.get("authorization")))
-        driver_Student = Main(service="db", log=logging,email=data['email'], token=request.headers.get("authorization"), user_type="STUDENTS", operation="validate")
+        driver_Student = Main(service="db", log=logging, roll_no = data['roll_no'], token=request.headers.get("authorization"), user_type="STUDENTS", operation="validate")
         driver_Student.driver_function()
         if driver_Student.auth:
-            logging.debug("Autthorized Student")
-            return flask.jsonify({"output":"Authorized Student"})
-            email = data['email']
-            language = data['lang']
-            type_ = data['type']
-
-            ## first it will run the test
-            ## second it will store the results
-            driver_Student = Main(service="db", log=logging,email=data['email'], token=request.headers.get("authorization"), user_type="STUDENTS", operation="submit")
+            # now checking student in course
+            driver_Student.update_data(request_data=data, operation="check_student_in_course")
             driver_Student.driver_function()
+            out = driver_Student.output
+
+            if not driver_Student.output:
+               # return flask.jsonify({"output":"Student register into course"})
+                # checking if assingment and deadline exist
+                driver_Student.update_data(request_data=data, operation="check_assignmnet_deadline")
+                driver_Student.driver_function()
+                out = driver_Student.output
+                # all condition met now checking for the assignment 
+                if driver_Student.output == True:
+                    driver_Student = Main(service="grade",request=request, log=logging,request_data=data, operation="submit")
+                    driver_Student.driver_function()
+                    out = driver_Student.output
+
 
         else:
             return flask.jsonify({"output": "UnAuthorized admin"})
@@ -232,7 +223,7 @@ def submit_test():
 
     #driver = Main("db","p156058", "p156058",logging,"test")
     #driver.driver_function()
-    return flask.jsonify({"output":driver.output})
+    return flask.jsonify({"output":driver_Student.output})
     
 
 @api.route('/SubmitFinal',methods=['POST'])

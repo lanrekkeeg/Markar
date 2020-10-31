@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+	<testsuite name="TestSequenceFunctions-20201024202923" tests="3" file=".py" time="0.005" timestamp="2020-10-24T20:29:23" failures="1" errors="0" skipped="0">
+		<testcase classname="TestSequenceFunctions" name="test_sum2" time="0.000" timestamp="2020-10-24T20:29:23" file="test3.py" line="11"/>
+		<testcase classname="TestSequenceFunctions" name="test_sum3" time="0.000" timestamp="2020-10-24T20:29:23" file="test3.py" line="13"/>
+		<testcase classname="TestSequenceFunctions" name="test_sum" time="0.005" timestamp="2020-10-24T20:29:23" file="test3.py" line="9">
+			<failure type="AssertionError" message=""><![CDATA[Traceback (most recent call last):
+  File "test3.py", line 10, in test_sum
+    assert 1 == 2
+AssertionError
+]]></failure>
+		</testcase>
+	</testsuite>
+</testsuites>

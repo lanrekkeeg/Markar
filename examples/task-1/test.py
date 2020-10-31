@@ -1,19 +1,26 @@
+import pytest
+import os
 import cppyy
-code = open("task-01.cpp",'r').read().strip()
+code = open("compute_sum.cpp",'r').read().strip()
 cppyy.cppdef(code)
+from cppyy.gbl import compute_sum
+from pytest_jsonreport.plugin import JSONReport
 
-from cppyy.gbl import List
-out = List()
-#out.add_link_node_to_tail(12)
-#out.add_node_to_tail(13)
-#out.add_node_to_tail(14)
-#out.add_node_to_tail(15)
-#out.print()
+def test_func1():
+    out = compute_sum(1,3) 
+    assert out == 6
 
-#head = out.get_head()
-#data = dict(head)
-#print(head.data)
-#print(type(head.next))
-#head = head.next
-#print(head)
-assert out.sum(4,5) != 9
+def d_test_func2():
+    assert compute_sum(1,3) == 6  
+
+def d_test_func3():
+    assert compute_sum(1,3) == 6
+
+if __name__ == '__main__':
+    #test_func1()
+    plugin = JSONReport()
+    pytest.main(['--json-report-file=none', 'test.py'], plugins=[plugin])
+    print(len(plugin.report['tests']))
+    for i in plugin.report['tests']:
+        print(i['nodeid'])
+    #print(type(cppyy.gbl.compute_sum(1,3)))
