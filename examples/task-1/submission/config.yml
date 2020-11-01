@@ -1,0 +1,10 @@
+COURSE:
+  code: cl-201
+  section: A
+CREDENTIAL:
+  email: null
+  token: null
+GRADER:
+  number: 1
+  type: Task
+URL: http://markar.faisalwork.net

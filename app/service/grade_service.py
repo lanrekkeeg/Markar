@@ -124,18 +124,22 @@ class GradeService:
         file_ = open(report_path,'r').read().strip()
         root = ET.fromstring(file_)
         report_dict = dictify(root)
-        REPORT = str()
+        REPORT = list()
         test_cases = report_dict['testsuites']['testsuite'][0]
         i = 1
         score = 0
         for ds in test_cases['testcase']:
             if ds.get("failure",None) is not None:
-                REPORT += "Test-Case-{0}, outcome:{1}, AssertError:{2}\n"\
-                    .format(str(i), "Fail", ds['failure'][0]['_text'])
+                test_output = {"Test":i,"outcome": "FAIL"}
+                REPORT.append(test_output)
+                #REPORT += "***Test-Case-{0}    outcome:{1}    AssertError:{2}**** \n \n"\
+                #    .format(str(i), "Fail", ds['failure'][0]['_text'])
                 #REPORT.update({"TEST-"+str(i):ds['name'], "outcome":"Fail", "AssertError":ds['failure'][0]['_text']})
             else:
-                REPORT += "Test-Case-{0}, outcome:{1}\n"\
-                    .format(str(i), "Pass")
+                test_output = {"Test":i,"outcome": "Pass"}
+                REPORT.append(test_output)
+                #REPORT += "Test-Case-{0}    outcome:{1}\n\n"\
+                #    .format(str(i), "Pass")
                 score +=1
             i += 1
         self.payload['marks'] = score

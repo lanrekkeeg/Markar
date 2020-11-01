@@ -351,9 +351,17 @@ class DB:
         cursor = self.db_con.cursor()
         cursor.execute(add_course, course_data)
         self.db_con.commit()
-    
+        '''
+        Hi x.y.z,
+        You have successfully registered in a new course. Details are stated below
+        CourseCode: cl-201
+        Email: p156058@nu.edu.pk
+        Section: A
+        '''
         #send_mail("faisal.khan@nu.edu.pk",self.email,"Your secured token for login is "+str(token))
-        #message = "Hi {0},\n You have been successfully \n CourseCode:{1}\n CourseName:{2}\n StudenEmail"
+        message = "Hi,\n You have successfully registered in a new course.Details are stated below\n\n    CourseCode: {0}\n    Email: {1}\n    Section: {2}\n\n\nRegards,\nFaisal khan"\
+            .format(self.payload['coursecode'],self.payload['email'], self.payload['section'])
+        send_mail("faisal.khan@nu.edu.pk", self.payload['email'] ,message, "Markar Course Registration Alert")
         return "STUDENT IS REGISTER SUCCESSFULLY"
 
 
@@ -402,9 +410,9 @@ class DB:
                 self.db_con.commit()
             else:
                 query = ("UPDATE TASKS SET OBTAINED_MARKS=%s "
-                         "WHERE ASSIGNMENT_NO=%s AND EMAIL=%s AND LAB_CODE=%s")
+                         "WHERE TASK_NO=%s AND EMAIL=%s AND LAB_CODE=%s")
                 cursor = self.db_con.cursor()
-                cursor.execute(marks,number, email,code)
+                cursor.execute(query,(marks,number, email,code))
                 self.db_con.commit()
 
         elif type_ == "Assignment":

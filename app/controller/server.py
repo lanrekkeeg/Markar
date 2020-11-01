@@ -226,7 +226,7 @@ def submit_test():
             return flask.jsonify({"output": "UnAuthorized admin"})
     #driver = Main("db","p156058", "p156058",logging,"test")
     #driver.driver_function()
-    return flask.jsonify({"output":driver_Student.output})
+    return flask.jsonify(json.dumps(driver_Student.output))
     
 
 @api.route('/SubmitFinal',methods=['POST'])
