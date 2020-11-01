@@ -101,12 +101,19 @@ def validate_create_folder(data):
         except Exception as exp:
             logging.debug("Got Exception:{}".format(str(exp)))
         #for num_ in range(total_que):
-        question_path = task_path + "/" + section + "/submission"
+        if type_ == "Task":
+            question_path = task_path + "/" + section + "/submission"
+        else:
+            question_path = task_path + "/submission"
         try:
             os.makedirs(question_path)
         except Exception as exp:
             logging.debug("Got Exception:{}".format(str(exp)))
-        test_cases = task_path + "/" + section + "/test"
+        if type_ == "Task":
+            test_cases = task_path + "/" + section + "/test"
+        else:
+            test_cases = task_path + "/test"
+
         try:
             os.makedirs(test_cases)
             return test_cases

@@ -1,5 +1,6 @@
 from app.service.db_service import DatabaseService
 from app.service.driver import *
+from app.util.util import *
 from app.configuration.config import *
 import re
 import os
@@ -31,39 +32,47 @@ class GradeService:
         3. roll no
         4. task no
         """
-        section = self.payload['section']
         email =  self.payload['email']
-        task_no = self.payload['number']
+        number = self.payload['number']
         coursecode = self.payload['coursecode']
-        trim_email = re.sub('[^A-Za-z0-9]+', '', email) 
+        #trim_email = re.sub('[^A-Za-z0-9]+', '', email) 
+        trim_email = email.split("@")
+        trim_email = trim_email[0]
         # e.g. course-name/Task/Task-1/A/submissions
-        Basepath = storage + coursecode + "/Task/Task-" + str(task_no) + '/' + section.capitalize()
-        file_name = trim_email + '_' + section + '_' + str(task_no)
-        student_dir = Basepath + '/submission/' + trim_email
-        
-        # student wolder will be created in submission folder
+
+        Basepath = str()
+        student_dir = str()
+        if self.payload['type'] == 'Task':
+            section = self.payload['section']
+            Basepath = storage + coursecode + "/Task/Task-" + str(number) + '/' + section.capitalize()
+        #file_name = trim_email + '_' + section + '_' + str(task_no)
+            student_dir = Basepath + '/submission/' + trim_email
+        elif self.payload['type'] == 'Assignment':
+            Basepath = storage + coursecode + "/Assignment/Assignment-" + str(number)
+        #file_name = trim_email + '_' + section + '_' + str(task_no)
+            student_dir = Basepath + '/submission/' + trim_email
+        self.log.debug("BasePath: {} \n studentDir: {}".format(Basepath, student_dir))
+        # student folder will be created in submission folder
         if not os.path.isdir(student_dir):
             os.mkdir(student_dir)
+            self.log.debug("creating folder for submission")
         
-        student_file_dir = student_dir + '/' + file_name
+        #student_file_dir = student_dir
+        student_code = self.request.files['Task-File']
+        filename = student_code.filename
+        student_file_dir = student_dir + "/" + filename
         student_report = student_dir + '/' + 'report.xml'
-        if not os.path.isfile(student_file_dir):
+        #if not os.path.isfile(student_file_dir):
             # frist save the file
-            student_code = self.request.files['Task-File']
-            student_code.save(student_file_dir)
-        
-        start_checking(Basepath,student_file_dir)
-        report_output = generate_report(student_report)
+            #student_code = self.request.files['Task-File']
+        student_code.save(student_file_dir)
+        #if not os.path.isfile(student_report):
+
+        self.start_checking(Basepath,student_file_dir, student_report)
+        report_output = self.generate_report(student_report)
         return report_output
         
-        # check the number
-        # calculate results
-        # task path
-
-        # test case path
-
-    
-    def start_checking(self, Basepath, student_file_dir):
+    def start_checking(self, Basepath, student_file_dir, report):
         """
         checking the task
         """
@@ -71,15 +80,32 @@ class GradeService:
         # load the test case file
         File = Basepath + '/test'
         # expecting only one file
-        test_files = arr = os.listdir(File)
+        test_files = os.listdir(File)
+        self.log.debug("test_file_name: {}".format(test_files[0]))
         test_files = test_files[0]
-        File = '/' + test_files
-        print(test_files[i])
+        File += '/' + test_files
         import subprocess
-        file = open(File, 'r').read().strip()
-        file = file.replace("<<DIR>>", student_file_dir)
-        file = file.replace("<<REPORT>>", report_path)
-        logging.debug("{}".format(subprocess.run(["python", File], capture_output=True)))
+        #import os
+        #file = open(File, 'r').read().strip()
+        #file = file.replace("<<DIR>>", student_file_dir)
+        #file = file.replace("<<REPORT>>", report)
+
+        #write_file = open(File, 'w')
+        #write_file.write(file)
+        #write_file.close()
+        #self.log.debug("Code: {}".format(file))
+        from subprocess import Popen
+        try:
+            logging.debug("Test: {}\nstudentFile:{}\nreportDir:{}\n".format(File,student_file_dir,report))
+            command = "python {0} \"{1}\" \"{2}\""\
+                .format(File, student_file_dir, report)
+            self.log.debug("Command: {}".format(command))
+            #out = Popen(command)#("python "+File+ " "+student_file_dir+" "+report)
+            out = subprocess.call(['python', File, report, student_file_dir])
+            self.log.debug("command output: {}".format(out))
+            #self.log.debug("{}".format(subprocess.run(["python", file])))
+        except Exception as exp:
+            self.log.error("Failed to load the file,Got following error {}".format(exp))
         #print(subprocess.run(["python", "unittest_.py"], capture_output=True))
 
 
@@ -97,9 +123,13 @@ class GradeService:
         Generating the report
         """
         file_ = open(report_path,'r').read().strip()
+        root = ET.fromstring(file_)
+        report_dict = dictify(root)
+        REPORT = str()
+        test_cases = report_dict['testsuites']['testsuite'][0]
         i = 1
         score = 0
-        for ds in ls['testcase']:
+        for ds in test_cases['testcase']:
             if ds.get("failure",None) is not None:
                 REPORT += "Test-Case-{0}, outcome:{1}, AssertError:{2}\n"\
                     .format(str(i), "Fail", ds['failure'][0]['_text'])

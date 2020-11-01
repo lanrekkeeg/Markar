@@ -1,6 +1,6 @@
 <testsuites>
-	<testsuite name="OutcomesTest-20201030111703" tests="2" file=".py" time="0.010" timestamp="2020-10-30T11:17:04" failures="0" errors="0" skipped="0">
-		<testcase classname="OutcomesTest" name="test_func1" time="0.010"/>
+	<testsuite name="OutcomesTest-20201031174448" tests="2" file=".py" time="0.018" timestamp="2020-10-31T17:44:48" failures="0" errors="0" skipped="0">
+		<testcase classname="OutcomesTest" name="test_func1" time="0.018"/>
 		<testcase classname="OutcomesTest" name="test_sum" time="0.000"/>
 	</testsuite>
 </testsuites>

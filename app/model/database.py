@@ -51,7 +51,7 @@ class DB:
             query = ("SELECT * FROM "+self.user_type+
             " WHERE EMAIL=%s and TOKEN=%s")
             self.log.debug("Query:{}".format(query))
-            cursor.execute(query, (self.payload['admin_email'],self.token))
+            cursor.execute(query, (self.payload['email'],self.payload['token']))
         elif self.user_type == "ADMIN":
             query = ("SELECT * FROM "+self.user_type+
             " WHERE EMAIL=%s and TOKEN=%s")
@@ -206,14 +206,15 @@ class DB:
             else:
                 return False
         elif type_ == "Assignment":
+            self.log.debug("Checking Assignment in autograder")
             number = self.payload['number']
             #question = payload['questions']
             cursor = self.db_con.cursor()
             query = ("SELECT * FROM META_ASSIGN"
-            " WHERE ASSIGN_NO=%s AND TOTAL_QUESTION=%s")
+            " WHERE ASSIGN_NO=%s")
             cursor.execute(query, (number,))
             res = cursor.fetchone()
-            self.log.debug("Result from CODE_LIST table {}".format(res))
+            self.log.debug("Result from Assignmeny table {}".format(res))
             if res is None:
                 return True
             else:
@@ -346,10 +347,12 @@ class DB:
         cursor.execute(query,(self.token))
 
         return "nothing"
+
     def check_if_task_exist(self):
         """
         check if task already exist
         """
+
     def update_score(self):
         """
         update score in appropriate table
@@ -436,15 +439,18 @@ class DB:
             cursor.execute(add_students, student_data)
             self.db_con.commit()
         elif type_ == "Assignment":
+            logging.debug("Adding the new task")
             number = self.payload['number']
+            date = self.payload['deadline']
+            marks = self.payload['marks']
+            code = self.payload['coursecode']
             #question = payload['questions']
             cursor = self.db_con.cursor()
-            query = ("SELECT * FROM META_ASSIGN"
-            " WHERE ASSIGN_NO=%s AND TOTAL_QUESTION=%s")
-            cursor.execute(query, (number,))
-            res = cursor.fetchone()
-            self.log.debug("Result from CODE_LIST table {}".format(res))
-            if res is None:
-                return True
-            else:
-                return False
+            add_students = ("INSERT INTO META_ASSIGN "
+               "(ASSIGN_NO, CODE, DEADLINE,MARKS) "
+               "VALUES (%s, %s, %s,%s)")
+            #self.log.debug("rollNo:{},email:{},token:{}".format(self.EMAIL, self.email, str(token)))
+            student_data = (number, code,date, marks)
+            cursor = self.db_con.cursor()
+            cursor.execute(add_students, student_data)
+            self.db_con.commit()

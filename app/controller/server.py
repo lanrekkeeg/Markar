@@ -35,7 +35,7 @@ def test():
         driver_Admin = Main(service="db", log=logging, email=data['email'], token=request.headers.get("authorization"), user_type="ADMIN", operation="validate")
         driver_Admin.driver_function()
         if driver_Admin.auth:
-            logging.debug("Autthorized Admin")
+            logging.debug("Authorized Admin")
             driver_Admin = Main(service="db", log=logging, request_data=data, user_type="ADMIN", operation="check_course")
             driver_Admin.driver_function()
             if not driver_Admin.output:
@@ -181,7 +181,7 @@ def add_assignment():
         return flask.jsonify({"output": "UnAuthorized admin"})
 
 
-@api.route('/SubmitTest',methods=['POST'])
+@api.route('/Submit',methods=['POST'])
 def submit_test():
     """
     Test submission
@@ -193,25 +193,30 @@ def submit_test():
         data = json.loads(data)
     except Exception as e:
         logging.error("error in decoding data coming through request, the error message is {}".format(str(e)))
-    if request.headers.get("authorization") is not None:
+    if data.get("token") is not None:
         # validating admin
         logging.debug("Token is {}".format(request.headers.get("authorization")))
-        driver_Student = Main(service="db", log=logging, roll_no = data['roll_no'], token=request.headers.get("authorization"), user_type="STUDENTS", operation="validate")
+        driver_Student = Main(service="db", log=logging,request_data=data, email=  data['email'], token=data.get("token"), user_type="STUDENTS", operation="validate")
         driver_Student.driver_function()
         if driver_Student.auth:
             # now checking student in course
+            logging.debug("Checking student in the course")
             driver_Student.update_data(request_data=data, operation="check_student_in_course")
             driver_Student.driver_function()
             out = driver_Student.output
 
             if not driver_Student.output:
+                logging.debug("Checking is registered in the course:{}".format(data['coursecode']))
                # return flask.jsonify({"output":"Student register into course"})
                 # checking if assingment and deadline exist
                 driver_Student.update_data(request_data=data, operation="check_assignmnet_deadline")
                 driver_Student.driver_function()
                 out = driver_Student.output
+                logging.debug("out:{}".format(out))
                 # all condition met now checking for the assignment 
                 if driver_Student.output == True:
+                    logging.debug("Assignment deadline is not pass")
+                    logging.debug("Passing Assignment to Grader")
                     driver_Student = Main(service="grade",request=request, log=logging,request_data=data, operation="submit")
                     driver_Student.driver_function()
                     out = driver_Student.output
@@ -219,8 +224,6 @@ def submit_test():
 
         else:
             return flask.jsonify({"output": "UnAuthorized admin"})
-    return flask.jsonify({"output":request.headers.get('authorization')})
-
     #driver = Main("db","p156058", "p156058",logging,"test")
     #driver.driver_function()
     return flask.jsonify({"output":driver_Student.output})
