@@ -206,7 +206,7 @@ def submit_test():
             out = driver_Student.output
 
             if not driver_Student.output:
-                logging.debug("Checking is registered in the course:{}".format(data['coursecode']))
+                logging.debug("Checking iif s registered in the course:{}".format(data['coursecode']))
                # return flask.jsonify({"output":"Student register into course"})
                 # checking if assingment and deadline exist
                 driver_Student.update_data(request_data=data, operation="check_assignmnet_deadline")

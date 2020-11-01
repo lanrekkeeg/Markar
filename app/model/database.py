@@ -137,6 +137,7 @@ class DB:
         code_name = self.payload['coursecode']
         email = self.payload['email']
         cursor = self.db_con.cursor()
+        self.log.debug("checking the student in the course in student list: {},{}".format(code_name,email))
         query = ("SELECT * FROM STUDENTS_LIST"
          " WHERE CODE=%s AND EMAIL=%s")
         cursor.execute(query, (code_name,email))
@@ -259,7 +260,26 @@ class DB:
             if section_ != section:
                 return "Task for this section does not exist"
             return True
-
+        
+        if self.payload['type'] == "Assignment":
+            self.log.debug("Checking for the ASSIGNMENT")
+            cursor = self.db_con.cursor()
+            query = ("SELECT * FROM META_ASSIGN"
+                " WHERE ASSIGN_NO=%s AND CODE=%s")
+            cursor.execute(query, (number,coursecode))
+            res = cursor.fetchone()
+            self.log.debug("ASSIGMENT meta data is:{}".format(res))
+            # checking if task is present or not
+            if res is None:
+                return "Task not present, kindly check with instructor"
+            # deadline checking
+            deadline = res[2]
+            self.log.debug("Deadline date for Assignment is:{}".format(deadline))
+            if dt_time > deadline:
+                return "Deadline Passed!Be on time next time :-"
+            
+            return True
+        
 
 
     def check_student_course(self):
@@ -367,8 +387,8 @@ class DB:
             code = self.payload['coursecode']
             #question = payload['questions']
             cursor = self.db_con.cursor()
-            add_students = ("SELECT MARKS FROM TASKS"
-            " WHERE TASK_NO=%s AND EMAIL=%s AND CODE=%s")
+            add_students = ("SELECT OBTAINED_MARKS FROM TASKS"
+            " WHERE TASK_NO=%s AND EMAIL=%s AND LAB_CODE=%s")
             #self.log.debug("rollNo:{},email:{},token:{}".format(self.EMAIL, self.email, str(token)))
             student_data = (number, email, code)
             cursor = self.db_con.cursor()
@@ -378,13 +398,13 @@ class DB:
                 query = ("INSERT INTO TASKS()"
                         " VALUES(%s,%s,%s,%s,%s)")
                 cursor = self.db_con.cursor()
-                cursor.execute(number, email, marks,code,1)
+                cursor.execute(query,(number, email, marks,code,1))
                 self.db_con.commit()
             else:
                 query = ("UPDATE TASKS SET OBTAINED_MARKS=%s "
-                         "WHERE ASSIGNMENT_NO=%s AND EMAIL=%s AND CODE=%s")
+                         "WHERE ASSIGNMENT_NO=%s AND EMAIL=%s AND LAB_CODE=%s")
                 cursor = self.db_con.cursor()
-                cursor.execute(marks,number, email,code,1)
+                cursor.execute(marks,number, email,code)
                 self.db_con.commit()
 
         elif type_ == "Assignment":
@@ -396,7 +416,7 @@ class DB:
             code = self.payload['coursecode']
             #question = payload['questions']
             cursor = self.db_con.cursor()
-            add_students = ("SELECT MARKS FROM ASSIGNMENTS"
+            add_students = ("SELECT OBTAINED_MARKS FROM ASSIGNMENTS"
             " WHERE ASSIGNMENT_NO=%s AND EMAIL=%s AND CODE=%s")
             #self.log.debug("rollNo:{},email:{},token:{}".format(self.EMAIL, self.email, str(token)))
             student_data = (number, email, code)
@@ -407,13 +427,13 @@ class DB:
                 query = ("INSERT INTO ASSIGNMENTS()"
                         " VALUES(%s,%s,%s,%s,%s)")
                 cursor = self.db_con.cursor()
-                cursor.execute(number, email, marks,code,1)
+                cursor.execute(query,(number, email, marks,code,1))
                 self.db_con.commit()
             else:
                 query = ("UPDATE ASSIGNMENTS SET OBTAINED_MARKS=%s "
                          "WHERE ASSIGNMENT_NO=%s AND EMAIL=%s AND CODE=%s")
                 cursor = self.db_con.cursor()
-                cursor.execute(marks,number, email,code,1)
+                cursor.execute(query,(marks,number, email,code))
                 self.db_con.commit()
 
     def add_task_assignm(self):

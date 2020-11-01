@@ -1,5 +1,5 @@
+#from app.service.driver import Main
 from app.service.db_service import DatabaseService
-from app.service.driver import *
 from app.util.util import *
 from app.configuration.config import *
 import re
@@ -70,6 +70,7 @@ class GradeService:
 
         self.start_checking(Basepath,student_file_dir, student_report)
         report_output = self.generate_report(student_report)
+        self.update_score()
         return report_output
         
     def start_checking(self, Basepath, student_file_dir, report):
@@ -107,16 +108,14 @@ class GradeService:
         except Exception as exp:
             self.log.error("Failed to load the file,Got following error {}".format(exp))
         #print(subprocess.run(["python", "unittest_.py"], capture_output=True))
-
-
     
     def update_score(self):
         """
         calculating number for particular assingment
         """
-        driver = Main(service='db',operation='update_score',request_data=self.payload)
+        from app.service.driver import Main
+        driver = Main(service='db',operation='update_score',log = self.log, request_data=self.payload)
         driver.driver_function()
-
 
     def generate_report(self, report_path):
         """
