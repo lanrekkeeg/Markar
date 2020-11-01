@@ -8,4 +8,3 @@ RUN chmod +x ./entrypoint.sh
 RUN chmod +x wsgi.py
 RUN ls
 ENTRYPOINT ["/usr/src/autograder/entrypoint.sh"]
-CMD []
