@@ -76,6 +76,19 @@ def send_mail(sender, receiver, body, subject):
         server.sendmail(sender, receiver, message.as_string())
         print("Email sent")
     
+def creat_default_course_folder(data):
+    """
+    This fucntion will create default table for course code.Default folder will be following 
+     1. Assignment
+     2. Course
+
+    """
+    coursecode = data['coursecode']
+    task_path = storage+coursecode
+    assign_path = storage+coursecode
+    os.makedirs(task_path)
+    os.makedirs(assign_path)
+    
 def validate_create_folder(data):
     """
     This function will create task folder / course folder / section folder / submission
