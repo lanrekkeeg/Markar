@@ -18,7 +18,7 @@ api.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
 @api.route('/MarkarTest',methods=['POST'])
-def add_task_assign():
+def markar_test():
     return flask.jsonify({"Hi, i am Markar. I assist teacher in assignment checking."})
 
 @api.route('/AddTaskAssign',methods=['POST'])
