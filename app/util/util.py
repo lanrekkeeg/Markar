@@ -84,8 +84,8 @@ def creat_default_course_folder(data):
 
     """
     coursecode = data['coursecode']
-    task_path = storage+coursecode
-    assign_path = storage+coursecode
+    task_path = storage+coursecode+"/Task"
+    assign_path = storage+coursecode+"/Assignment"
     logging.debug("Creaating Defual folder for {}".format(coursecode))
     try:
         os.makedirs(task_path)
