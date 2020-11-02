@@ -166,7 +166,7 @@ class DB:
         cursor.execute(add_course, course_data)
         self.db_con.commit()
     
-        #send_mail("faisal.khan@nu.edu.pk",self.email,"Your secured token for login is "+str(token))
+        send_mail("faisal.khan@nu.edu.pk",self.email,"Your secured token for login is "+str(token))
         return "Course Added, Student can register to it."
 
     def check_course(self):
