@@ -8,3 +8,4 @@ jsons
 mysql-connector-python
 gunicorn
 unittest-xml-reporting
+lxml

@@ -60,7 +60,8 @@ class GradeService:
         #student_file_dir = student_dir
         student_code = self.request.files['Task-File']
         filename = student_code.filename
-        student_file_dir = student_dir + "/" + filename
+         _, file_extention = filename.split(".")
+        student_file_dir = student_dir + "/" + trim_email+"."+file_extention
         student_report = student_dir + '/' + 'report.xml'
         #if not os.path.isfile(student_file_dir):
             # frist save the file
