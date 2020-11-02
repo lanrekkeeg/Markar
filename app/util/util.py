@@ -86,9 +86,13 @@ def creat_default_course_folder(data):
     coursecode = data['coursecode']
     task_path = storage+coursecode
     assign_path = storage+coursecode
-    os.makedirs(task_path)
-    os.makedirs(assign_path)
-    
+    logging.debug("Creaating Defual folder for {}".format(coursecode))
+    try:
+        os.makedirs(task_path)
+        os.makedirs(assign_path)
+    except Exception as exp:
+        logging.error("Unable to create folder failed with {}".format(str(exp)))
+
 def validate_create_folder(data):
     """
     This function will create task folder / course folder / section folder / submission
