@@ -16,8 +16,13 @@ api = Flask(__name__)
 api.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
-@api.route('/test',methods=['POST'])
-def test():
+
+@api.route('/MarkarTest',methods=['POST'])
+def add_task_assign():
+    return flask.jsonify({"Hi, i am Markar. I assist teacher in assignment checking."})
+
+@api.route('/AddTaskAssign',methods=['POST'])
+def add_task_assign():
     """Register user in database"""
 
     try:
@@ -53,8 +58,8 @@ def test():
     # if you want to save it
     #picture.save('path/to/save')
 
-    return 'ok', 200
-   # return flask.jsonify({"output":driver.output})
+    #return 'ok', 200
+    return flask.jsonify({"sucess":True, "output":driver.output})
 
 @api.route('/AddCourse',methods=['POST'])
 def add_course_code():
