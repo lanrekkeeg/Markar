@@ -77,7 +77,7 @@ def add_course_code():
             logging.debug("Autthorized Admin")
             driver_Admin.update_data(request_data= data,operation="course_code")
             driver_Admin.driver_function()
-            creat_default_course_folder(request_data)
+            creat_default_course_folder(data)
             return flask.jsonify({"output":driver_Admin.output})
 
         else:
