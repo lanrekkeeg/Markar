@@ -361,7 +361,7 @@ class DB:
         #send_mail("faisal.khan@nu.edu.pk",self.email,"Your secured token for login is "+str(token))
         message = "Hi,\n You have successfully registered in a new course.Details are stated below\n\n    CourseCode: {0}\n    Email: {1}\n    Section: {2}\n\n\nRegards,\nFaisal khan"\
             .format(self.payload['coursecode'],self.payload['email'], self.payload['section'])
-        send_mail("faisal.khan@nu.edu.pk", self.payload['email'] ,message, "Markar Course Registration Alert")
+        #send_mail("faisal.khan@nu.edu.pk", self.payload['email'] ,message, "Markar Course Registration Alert")
         return "STUDENT IS REGISTER SUCCESSFULLY"
 
 
