@@ -107,6 +107,32 @@ def submit():
     print(outcome.json)
     print("**************************************************")
 
+@main.command()
+def deadline():
+    conf = load_config()
+
+    section = conf['COURSE']['section']
+    coursecode = conf['COURSE']['code']
+
+    if conf['CREDENTIAL'].get("email") is None or conf['CREDENTIAL'].get("token") is None:
+        print("ERROR, Credential not present.Please run 'python markar.py config' to setup credentail")
+        exit()
+
+    email = conf['CREDENTIAL']['email']
+    token = conf['CREDENTIAL']['token']
+
+    type_ = conf['GRADER']['type']
+    number = conf['GRADER']['number']
+    headers = {'Content-type': 'application/json'}
+
+    payload = {"email": email,"token": token, "number": number, "section": section, "type": task, "coursecode": coursecode}
+
+    outcome = requests.post(conf['URL'] + "/CheckDeadline", data=data, headers=headers)
+    print("++++++++++++++SERVER Result++++++++++++++++++++++")
+    print(outcome.json)
+    print("**************************************************")
+
+
 
 
 
