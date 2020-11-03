@@ -226,8 +226,6 @@ def submit_test():
                     driver_Student = Main(service="grade",request=request, log=logging,request_data=data, operation="submit")
                     driver_Student.driver_function()
                     out = driver_Student.output
-
-
         else:
             return flask.jsonify({"output": "UnAuthorized admin"})
     #driver = Main("db","p156058", "p156058",logging,"test")
@@ -251,11 +249,10 @@ def submit_final():
         return flask.jsonify({"output": "UnAuthorized admin"})
 
 @api.route('/CheckDeadline',methods=['POST'])
-def post():
+def dead_line():
     """Register user in database"""
     out = str()
     try:
-        
         data = request.get_json()
     except Exception as e:
         logging.error("error in decoding data coming through request, the error message is {}".format(str(e)))
@@ -275,7 +272,7 @@ def post():
             return flask.jsonify({"output": "UnAuthorized Students"})
     #driver = Main("db","p156058", "p156058",logging,"test")
     #driver.driver_function()
-    return flask.jsonify(json.dumps(out))
+    return flask.jsonify(json_serial(out))
 
 
         

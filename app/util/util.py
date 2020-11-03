@@ -12,6 +12,8 @@ import yaml
 import os
 import xml.etree.ElementTree as ET
 from copy import copy
+from datetime import date, datetime
+
 logging.basicConfig(level=logging.DEBUG)
 ALLOWED_EXTENSIONS = ['cpp']
 
@@ -41,9 +43,6 @@ def format_rollNo(roll_no):
     roll_clean = 'p'+roll_clean
     logging.debug("Formatted roll no is:{}".format(roll_clean))
     return roll_clean
-
-
-
 
 def read_password():
     """
@@ -92,6 +91,14 @@ def creat_default_course_folder(data):
         os.makedirs(assign_path)
     except Exception as exp:
         logging.error("Unable to create folder failed with {}".format(str(exp)))
+
+
+def json_serial(obj):
+    """JSON serializer for objects not serializable by default json code"""
+
+    if isinstance(obj, (datetime, date)):
+        return obj.isoformat()
+    raise TypeError ("Type %s not serializable" % type(obj))
 
 def validate_create_folder(data):
     """
