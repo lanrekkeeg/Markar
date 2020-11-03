@@ -278,11 +278,11 @@ def post():
     return flask.jsonify(json.dumps(out))
 
 @api.route('/grade',methods=['POST'])
-def post():
-    """Register user in database"""
-    driver = Main("grade","p156058", "p156058",logging)
-    driver.driver_function("test")
-    return flask.jsonify({"output":driver.output})
+    def post():
+        """Register user in database"""
+        driver = Main("grade","p156058", "p156058",logging)
+        driver.driver_function("test")
+        return flask.jsonify({"output":driver.output})
 
 
         
