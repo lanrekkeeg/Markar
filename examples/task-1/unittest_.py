@@ -3,6 +3,9 @@ import cppyy
 import xmlrunner
 import io
 from xmlrunner.extra.xunit_plugin import transform
+import logging
+logging.basicConfig(level=logging.DEBUG)
+import sys
 
 code = open("compute_sum.cpp",'r').read().strip()
 cppyy.cppdef(code)

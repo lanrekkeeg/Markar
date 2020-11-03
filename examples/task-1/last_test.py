@@ -5,15 +5,18 @@ import io
 from xmlrunner.extra.xunit_plugin import transform
 import sys
 
-student_dir = sys.argv.pop()
-report_dir = sys.argv.pop()
+#student_dir = sys.argv.pop()
+#report_dir = sys.argv.pop()
 
-print("Studen Dir:{} \n Report Dir:{}".format(student_dir,report_dir))
+#print("Studen Dir:{} \n Report Dir:{}".format(student_dir,report_dir))
 #### DO NOT CHANGE #################
-code = open(student_dir,'r').read().strip()
+#code = open('compute_sum.cpp','r').read().strip()
 #code = open("compute_sum.cpp",'r').read().strip()
-cppyy.cppdef(code)
-
+#cppyy.cppdef(code)
+try:
+    cppyy.cppdef(code)
+except Exception as exp:
+    sys.exit("CompilingError")
 # FUNCTION OR CLASS FROM CODE, NOW YOU CAN TREAT THIS AS PYTHON CODE
 from cppyy.gbl import compute_sum
 out = io.BytesIO()
@@ -45,5 +48,5 @@ if __name__ == "__main__":
     unittest.main(
     testRunner=xmlrunner.XMLTestRunner(output=out),
     failfast=False, buffer=False, catchbreak=False, exit=False)
-    with open(report_dir, 'wb') as report:
+    with open('report2.xml', 'wb') as report:
         report.write(transform(out.getvalue()))

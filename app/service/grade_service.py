@@ -69,7 +69,9 @@ class GradeService:
         student_code.save(student_file_dir)
         #if not os.path.isfile(student_report):
 
-        self.start_checking(Basepath,student_file_dir, student_report)
+        output = self.start_checking(Basepath,student_file_dir, student_report)
+        if output:
+            return "Error in Compiling"
         report_output = self.generate_report(student_report)
         self.update_score()
         return report_output
@@ -104,6 +106,8 @@ class GradeService:
             self.log.debug("Command: {}".format(command))
             #out = Popen(command)#("python "+File+ " "+student_file_dir+" "+report)
             out = subprocess.call(['python', File, report, student_file_dir])
+            if out:
+                return False
             self.log.debug("command output: {}".format(out))
             #self.log.debug("{}".format(subprocess.run(["python", file])))
         except Exception as exp:

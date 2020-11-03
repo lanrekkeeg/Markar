@@ -5,7 +5,7 @@ using namespace std;
 int compute_sum(int start, int end){
 
     if(start == end){
-        return end;
+        return end
     }
     else return start + compute_sum((++start), end);
 }
