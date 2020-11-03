@@ -281,6 +281,64 @@ class DB:
             return True
         
 
+    def return_deadline(self):
+        """
+        check two thing
+        1. if task/assignment exist
+        2. check the deadline
+        3. check number of submission
+
+        any condition false will return particular message stating above condition
+        """
+        now = datetime.now()
+        dt_string = now.strftime("%d-%m-%Y %H:%M:%S")
+        dt_time = datetime.strptime(dt_string, '%d-%m-%Y %H:%M:%S')
+        # task number
+        number = self.payload['number']
+        coursecode =  self.payload['coursecode']
+
+        if self.payload['type'] == "Task":
+            self.log.debug("Checking for the task")
+            section = self.payload['section']
+            cursor = self.db_con.cursor()
+            query = ("SELECT * FROM META_TASK"
+                " WHERE TASK_NO=%s AND CODE=%s AND SECTION=%s")
+            cursor.execute(query, (number,coursecode,section))
+            res = cursor.fetchone()
+            self.log.debug("Task meta data is:{}".format(res))
+            # checking if task is present or not
+            if res is None:
+                return "Task not present, kindly check with instructor"
+            # deadline checking
+            deadline = res[3]
+            if dt_time > deadline:
+                return "Deadline Passed!Be on time next time :-"
+            
+            # checking student is belong to same section
+            # task tection
+            section_ = res[2]
+            if section_ != section:
+                return "Task for this section does not exist"
+            return deadline
+        
+        if self.payload['type'] == "Assignment":
+            self.log.debug("Checking for the ASSIGNMENT")
+            cursor = self.db_con.cursor()
+            query = ("SELECT * FROM META_ASSIGN"
+                " WHERE ASSIGN_NO=%s AND CODE=%s")
+            cursor.execute(query, (number,coursecode))
+            res = cursor.fetchone()
+            self.log.debug("ASSIGMENT meta data is:{}".format(res))
+            # checking if task is present or not
+            if res is None:
+                return "Task not present, kindly check with instructor"
+            # deadline checking
+            deadline = res[2]
+            self.log.debug("Deadline date for Assignment is:{}".format(deadline))
+            if dt_time > deadline:
+                return "Deadline Passed!Be on time next time :-"
+            
+            return True
 
     def check_student_course(self):
         """

@@ -250,6 +250,32 @@ def submit_final():
     else:
         return flask.jsonify({"output": "UnAuthorized admin"})
 
+@api.route('/CheckDeadline',methods=['POST'])
+def post():
+    """Register user in database"""
+    out = str()
+    try:
+        
+        data = request.get_json()
+    except Exception as e:
+        logging.error("error in decoding data coming through request, the error message is {}".format(str(e)))
+    if data.get("token") is not None:
+        # validating admin
+        logging.debug("Token is {}".format(request.headers.get("authorization")))
+        driver_Student = Main(service="db", log=logging,request_data=data, email=  data['email'], token=data.get("token"), user_type="STUDENTS", operation="validate")
+        driver_Student.driver_function()
+        if driver_Student.auth:
+            # now checking student in course
+            logging.debug("Checking student in the course")
+            driver_Student.update_data(request_data=data, operation="return_deadline")
+            driver_Student.driver_function()
+            out = driver_Student.output
+
+        else:
+            return flask.jsonify({"output": "UnAuthorized Students"})
+    #driver = Main("db","p156058", "p156058",logging,"test")
+    #driver.driver_function()
+    return flask.jsonify(json.dumps(out))
 
 @api.route('/grade',methods=['POST'])
 def post():

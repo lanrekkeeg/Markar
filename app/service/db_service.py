@@ -52,6 +52,9 @@ class DatabaseService:
         
         if self.operation == "update_score":
             driver.output = self.database.update_score()
+        
+        if self.operation == "return_deadline":
+            driver.output = self.database.return_deadline()
 
 
 
