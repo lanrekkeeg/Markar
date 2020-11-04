@@ -4,9 +4,13 @@ using namespace std;
 class Sum{
     public:
 
-        ///// YOUR CODE HERE //////
+        ///// DO NOT CHANGE FUNCTION NAME OR PARAMETERS //////
         long sum(long a, long b){
-            return a+b;
+            // YOUR CODE //
+
+            return a+b
+
+            // RETURN THE OUTPUT OF a+b
         }
 };
 

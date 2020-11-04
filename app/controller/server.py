@@ -226,6 +226,9 @@ def submit_test():
                     driver_Student = Main(service="grade",request=request, log=logging,request_data=data, operation="submit")
                     driver_Student.driver_function()
                     out = driver_Student.output
+            else:
+                driver_Student.output = "Not Registered In The Course!"
+
         else:
             return flask.jsonify({"output": "UnAuthorized admin"})
     #driver = Main("db","p156058", "p156058",logging,"test")

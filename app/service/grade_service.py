@@ -73,6 +73,7 @@ class GradeService:
         if output:
             return "Error in Compiling"
         report_output = self.generate_report(student_report)
+        #return report_output
         self.update_score()
         return report_output
         
@@ -107,7 +108,7 @@ class GradeService:
             #out = Popen(command)#("python "+File+ " "+student_file_dir+" "+report)
             out = subprocess.call(['python', File, report, student_file_dir])
             if out:
-                return False
+                return True
             self.log.debug("command output: {}".format(out))
             #self.log.debug("{}".format(subprocess.run(["python", file])))
         except Exception as exp:

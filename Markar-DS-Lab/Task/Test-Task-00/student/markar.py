@@ -4,6 +4,8 @@ import os
 import requests
 import subprocess
 import logging
+import json
+
 logging.basicConfig(level=logging.DEBUG)
 
 def load_config():
@@ -87,7 +89,7 @@ def submit():
     type_ = conf['GRADER']['type']
     number = conf['GRADER']['number']
 
-    payload = {"email": email,"token": token, "number": number, "section": section, "type": task, "coursecode": coursecode}
+    payload = {"email": email,"token": token, "number": number, "section": section, "type": type_, "coursecode": coursecode}
     
     if type_ == "Task":
         filename = "task.cpp"
@@ -102,9 +104,9 @@ def submit():
     except Exception as exp:
         logging.error("Got error in load file: {}".format(str(exp)))
 
-    outcome = requests.post(conf['URL'], files=files)
+    outcome = requests.post(conf['URL']+'/Submit', files=files)
     print("++++++++++++++SERVER REPORT++++++++++++++++++++++")
-    print(outcome.json)
+    print(outcome.json())
     print("**************************************************")
 
 @main.command()
@@ -127,9 +129,9 @@ def deadline():
 
     payload = {"email": email,"token": token, "number": number, "section": section, "type": type_, "coursecode": coursecode}
 
-    outcome = requests.post(conf['URL'] + "/CheckDeadline", data=payload, headers=headers)
+    outcome = requests.post(conf['URL'] + "/CheckDeadline", data=json.dumps(payload), headers=headers)
     print("++++++++++++++SERVER Result++++++++++++++++++++++")
-    print(outcome.json)
+    print(outcome.json())
     print("**************************************************")
 
 
