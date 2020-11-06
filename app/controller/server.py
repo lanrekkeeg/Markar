@@ -212,7 +212,7 @@ def submit_test():
             out = driver_Student.output
 
             if not driver_Student.output:
-                logging.debug("Checking iif s registered in the course:{}".format(data['coursecode']))
+                logging.debug("Checking if s registered in the course:{}".format(data['coursecode']))
                # return flask.jsonify({"output":"Student register into course"})
                 # checking if assingment and deadline exist
                 driver_Student.update_data(request_data=data, operation="check_assignmnet_deadline")
@@ -227,10 +227,10 @@ def submit_test():
                     driver_Student.driver_function()
                     out = driver_Student.output
             else:
-                driver_Student.output = "Not Registered In The Course!"
+                driver_Student.output = "Either Wrong Secion or Not Registered In The Course!"
 
         else:
-            return flask.jsonify({"output": "UnAuthorized admin"})
+            return flask.jsonify({"output": "UnAuthorized Student"})
     #driver = Main("db","p156058", "p156058",logging,"test")
     #driver.driver_function()
     return flask.jsonify(json.dumps(driver_Student.output))
