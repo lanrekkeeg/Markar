@@ -53,8 +53,8 @@ def local():
     """
     test_file = os.getcwd() + "/test.py"
     out = subprocess.call(['python', test_file])
-    if out:
-        logging.error("Compilation Eror!")
+    #if out:
+    #    logging.error("Compilation Eror!")
 
 @main.command()
 def reset():

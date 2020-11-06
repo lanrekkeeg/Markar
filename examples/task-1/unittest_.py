@@ -8,7 +8,11 @@ logging.basicConfig(level=logging.DEBUG)
 import sys
 
 code = open("compute_sum.cpp",'r').read().strip()
-cppyy.cppdef(code)
+try:
+    status = cppyy.cppdef(code)
+except:
+#if status != True:
+    sys.exit("*************************Compilation Error*************************")
 from cppyy.gbl import compute_sum
 out = io.BytesIO()
 

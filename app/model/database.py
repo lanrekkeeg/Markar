@@ -129,13 +129,40 @@ class DB:
         else:
             return False
 
+    def verify_coure_base_registration(self):
+        """
+        check if student is registered to lab or course  for task submission
+
+        Note: This function will be merged with check_student_registration
+        """
+        code_name = self.payload['coursecode']
+        email = self.payload['email']
+        
+        if self.payload['type'] == "Task":
+            section = self.payload['section']
+            cursor = self.db_con.cursor()
+            self.log.debug("checking the student in the course in student list: {},{}".format(code_name,email))
+            query = ("SELECT * FROM STUDENTS_LIST"
+            " WHERE CODE=%s AND EMAIL=%s AND SECTION=%s")
+            cursor.execute(query, (code_name,email, section))
+            res = cursor.fetchone()
+            self.log.debug("Result from Courses table {}".format(res))
+            if res is None:
+                return True
+            else:
+                return False
+        else return check_student_registeration()
+
     def check_student_registeration(self):
         """
-        check if student is registetere to particular course
+        check if student is registeter in any course
         """
         
         code_name = self.payload['coursecode']
         email = self.payload['email']
+            
+        # WE NEED TO ADD SECTION
+        #section = self.payload['section']
         cursor = self.db_con.cursor()
         self.log.debug("checking the student in the course in student list: {},{}".format(code_name,email))
         query = ("SELECT * FROM STUDENTS_LIST"
@@ -246,6 +273,8 @@ class DB:
             cursor.execute(query, (number,coursecode,section))
             res = cursor.fetchone()
             self.log.debug("Task meta data is:{}".format(res))
+
+            ####### CHECKINFG IF STUDENTS IS REGISTERED IN THAT PARTICUALR COURSE
             # checking if task is present or not
             if res is None:
                 return "Task not present, kindly check with instructor"
@@ -271,7 +300,7 @@ class DB:
             self.log.debug("ASSIGMENT meta data is:{}".format(res))
             # checking if task is present or not
             if res is None:
-                return "Task not present, kindly check with instructor"
+                return "Assignment not present, kindly check with instructor"
             # deadline checking
             deadline = res[2]
             self.log.debug("Deadline date for Assignment is:{}".format(deadline))
@@ -472,6 +501,11 @@ class DB:
                 cursor = self.db_con.cursor()
                 cursor.execute(query,(marks,number, email,code))
                 self.db_con.commit()
+                
+                query = ("UPDATE TASKS SET SUBMISSION_STATUS=SUBMISSION_STATUS+1")
+                cursor = self.db_con.cursor()
+                cursor.execute(query)
+                self.db_con.commit()
 
         elif type_ == "Assignment":
             logging.debug("Adding the new task")
@@ -494,6 +528,11 @@ class DB:
                         " VALUES(%s,%s,%s,%s,%s)")
                 cursor = self.db_con.cursor()
                 cursor.execute(query,(number, email, marks,code,1))
+                self.db_con.commit()
+                
+                query = ("UPDATE ASSIGNMENTS SET SUBMISSION_STATUS=SUBMISSION_STATUS+1")
+                cursor = self.db_con.cursor()
+                cursor.execute(query)
                 self.db_con.commit()
             else:
                 query = ("UPDATE ASSIGNMENTS SET OBTAINED_MARKS=%s "

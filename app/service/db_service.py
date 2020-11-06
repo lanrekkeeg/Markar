@@ -36,7 +36,7 @@ class DatabaseService:
             driver.output = self.database.add_student_to_course()
         
         if self.operation == "check_student_in_course":
-            driver.output = self.database.check_student_registeration()
+            driver.output = self.database.verify_coure_base_registration()
         
         if self.operation == "check_assignmnet_deadline":
             driver.output = self.database.check_assignmnet_deadline()
