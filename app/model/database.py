@@ -503,9 +503,10 @@ class DB:
                 cursor.execute(query,(marks,number, email,code))
                 self.db_con.commit()
                 
-                query = ("UPDATE TASKS SET SUBMISSION_STATUS=SUBMISSION_STATUS+1")
+                query = ("UPDATE TASKS SET SUBMISSION_STATUS=SUBMISSION_STATUS+1"
+                        "WHERE TASK_NO=%s AND EMAIL=%s AND LAB_CODE=%s")
                 cursor = self.db_con.cursor()
-                cursor.execute(query)
+                cursor.execute(query,(marks,number, email,code))
                 self.db_con.commit()
 
         elif type_ == "Assignment":
@@ -531,9 +532,12 @@ class DB:
                 cursor.execute(query,(number, email, marks,code,1))
                 self.db_con.commit()
                 
-                query = ("UPDATE ASSIGNMENTS SET SUBMISSION_STATUS=SUBMISSION_STATUS+1")
+                query = ("UPDATE ASSIGNMENTS SET SUBMISSION_STATUS=SUBMISSION_STATUS+1"
+                        " WHERE ASSIGNMENT_NO=%s AND EMAIL=%s AND CODE=%s")
+                #self.log.debug("rollNo:{},email:{},token:{}".format(self.EMAIL, self.email, str(token)))
+                student_data = (number, email, code)
                 cursor = self.db_con.cursor()
-                cursor.execute(query)
+                cursor.execute(query, student_data)
                 self.db_con.commit()
             else:
                 query = ("UPDATE ASSIGNMENTS SET OBTAINED_MARKS=%s "
