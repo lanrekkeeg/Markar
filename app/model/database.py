@@ -151,7 +151,8 @@ class DB:
                 return True
             else:
                 return False
-        else return check_student_registeration()
+        else:
+            return check_student_registeration()
 
     def check_student_registeration(self):
         """
