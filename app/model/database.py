@@ -504,7 +504,7 @@ class DB:
                 self.db_con.commit()
                 
                 query = ("UPDATE TASKS SET SUBMISSION_STATUS=SUBMISSION_STATUS+1"
-                        "WHERE TASK_NO=%s AND EMAIL=%s AND LAB_CODE=%s")
+                        " WHERE TASK_NO=%s AND EMAIL=%s AND LAB_CODE=%s")
                 cursor = self.db_con.cursor()
                 cursor.execute(query,(number, email,code))
                 self.db_con.commit()
