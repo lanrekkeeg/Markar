@@ -21,9 +21,12 @@ out = dictify(root)
 REPORT = str()
 ls = out['testsuites']['testsuite'][0]
 i = 1
-
+print(ls)
+print("________________________________")
 for ds in ls['testcase']:
+    print(ds['name'])
     if ds.get("failure",None) is not None:
+        
         REPORT += "Test-Case-{0}, outcome:{1}, AssertError:{2}\n"\
             .format(str(i), "Fail", ds['failure'][0]['_text'])
         #REPORT.update({"TEST-"+str(i):ds['name'], "outcome":"Fail", "AssertError":ds['failure'][0]['_text']})
@@ -36,4 +39,4 @@ for ds in ls['testcase']:
  #   else:
  #       REPORT.update({"TEST-"+str(i):ds['name'], "outcome":"Pass"})
  #   i += 1
-print(REPORT)
+#print(REPORT)
