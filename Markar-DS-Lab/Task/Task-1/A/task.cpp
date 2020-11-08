@@ -33,7 +33,7 @@ int main(){
    if(reverse_from_special_character("sdssdsd..ds",'.',0)==""){
         cout<<"Empty"<<endl;
     }
-    cout<<"Output:"<<reverse_from_special_character(".abcdef.sdssd",'.',0)<<endl;
+    cout<<"Output:"<<reverse_from_special_character("Hello D$orothy",'$',0)<<endl;
     cout<<"Output:"<<reverse_from_special_character("abcdef.sds%sd",'%',0)<<endl;
     cout<<"Output:"<<reverse_from_special_character("abcde'fsdssd",'\'',0)<<endl;
     
