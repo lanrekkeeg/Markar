@@ -5,7 +5,8 @@ from passlib.hash import sha256_crypt
 import mysql.connector
 from mysql.connector import errorcode
 from config import *
-
+import requests
+import json
 app = Flask(__name__)
 
 app.config['MYSQL_HOST'] = 'localhost'
@@ -40,20 +41,18 @@ def login():
     if request.method == 'POST':
         email = request.form['email']
         tokendb = request.form['token']
-        data = {}
+        headers = {'authorization':tokendb, 'Content-type':'application/json'}
+        data= {"admin_email": email}
+        out = requests.post(markar_api+"/ValidateAdmin", data=json.dumps(data), headers=headers)
 
-        if data is not None:
-            token = data[1]
-
-            if token == tokendb:
-                app.logger.info('TOKEN MATCHED')
-                return render_template('dashboard-t.html')
-
-            else:
-                app.logger.info('INCORRECT TOKEN')
+        print(out.json())
+        data = out.json()
+        if data['authorize']:
+            app.logger.info('TOKEN MATCHED')
+            return render_template('dashboard-t.html')
         else:
-            app.logger.info('NO RECORD FOUND')
-
+            app.logger.info('INCORRECT TOKEN')
+       
     return render_template('login.html')
     #return redirect(url_for('home'))
 
