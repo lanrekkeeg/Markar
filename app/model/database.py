@@ -368,7 +368,7 @@ class DB:
             if dt_time > deadline:
                 return "Deadline Passed!Be on time next time :-"
             
-            return True
+            return deadline
 
     def check_student_course(self):
         """

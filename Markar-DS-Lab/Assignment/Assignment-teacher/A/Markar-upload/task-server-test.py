@@ -4,6 +4,7 @@ import xmlrunner
 import io
 from xmlrunner.extra.xunit_plugin import transform
 import sys
+from unittest.case import SkipTest
 
 student_dir = sys.argv.pop()
 report_dir = sys.argv.pop()
@@ -12,6 +13,7 @@ print("Studen Dir:{} \n Report Dir:{}".format(student_dir,report_dir))
 #### DO NOT CHANGE #################
 code = open(student_dir,'r').read().strip()
 cppyy.cppdef(code)
+from cppyy.gbl import BST
 
 # FUNCTION OR CLASS FROM CODE, NOW YOU CAN TREAT THIS AS PYTHON CODE
 out = io.BytesIO()
