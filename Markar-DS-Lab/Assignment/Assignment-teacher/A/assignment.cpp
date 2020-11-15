@@ -112,8 +112,10 @@ public:
 
     // Part-B
     int find_left_most(node *root_iter, int level, int height, string child="nill"){
+        if (root_iter == root && root->left == NULL && root->right == NULL)
+            return 1;
         if (root_iter==NULL)
-            return -1;
+            return 0;
         if(root_iter->left != NULL){
             //cout<<"Node: "<<root_iter->data<< " height is: "<<level<<endl;
             level++;
@@ -183,11 +185,10 @@ public:
     }
 
     int min_diff(node *root_iter,int diff=0){
-        // ye bhi theek hai
         if (root_iter == NULL)return 0;
 
         diff = min_diff(root_iter->left,diff);
-        min_diff(root_iter->right, diff);
+        diff = min_diff(root_iter->right, diff);
         int diff_left=0,diff_right=0, temp_min;
         if (root_iter->left!=NULL)
             diff_left = root_iter->data - root_iter->left->data;
@@ -195,9 +196,14 @@ public:
             diff_right = root_iter->right->data - root_iter->data;
         if (diff_left == 0)
             return get_min(diff, diff_right);
-        if (diff_right == 0)
+        else if (diff_right == 0)
             return get_min(diff, diff_left);
+        else{
+            int min_tmp = get_min(diff_right, diff_left);
+            return get_min(min_tmp, diff);
+        }
         
+        /*
         if (diff_left>diff_right){ 
             int diff1 = diff_left - diff_right;
             return get_min(diff1, diff);
@@ -205,8 +211,9 @@ public:
         else {
             int diff2 = diff_right-diff_left;
             return get_min(diff2, diff);
+        */
 
-    }}
+    }
 };
 
 

@@ -25,152 +25,152 @@ class Makar(unittest.TestCase):
     
     def test1_A(self):
         try:
-            node_list = [20,15,25]
+            node_list = [24,16,9,32,28,19,17]
             bst = self.insert(node_list)
             count_nodes = bst.count_nodes
         except:
             raise SkipTest
-        self.assertEqual(count_nodes(bst.Get_Root(),20),3)
+        self.assertEqual(count_nodes(bst.Get_Root(),16),4)
 
     def test2_A(self):
         try:
-            node_list = [10,6,29,22,45,44,55,66,5,8,4]
+            node_list = [24,16,9,32,28,19,17]
             bst = self.insert(node_list)
             count_nodes = bst.count_nodes
         except:
             raise SkipTest
-        self.assertEqual(count_nodes(bst.Get_Root(),6),4)
+        self.assertEqual(count_nodes(bst.Get_Root(),32),2)
         
     def test3_A(self):
         try:
-            node_list = [10,6,29,22,45,44,55,66,5,8,4]
+            node_list = [24,16,9,32,28,19,17]
             bst = self.insert(node_list)
             count_nodes = bst.count_nodes
         except:
             raise SkipTest
-        self.assertEqual(count_nodes(bst.Get_Root(),45),4)
+        self.assertEqual(count_nodes(bst.Get_Root(),24),7)
 
     def test4_A(self):
         try:
-            node_list = [10,6,29,22,45,44,55,66,5,8,4]
+            node_list = [24,16,9,32,28,19,17]
             bst = self.insert(node_list)
             count_nodes = bst.count_nodes
         except:
             raise SkipTest
-        self.assertEqual(count_nodes(bst.Get_Root(),29),6)
+        self.assertEqual(count_nodes(bst.Get_Root(),19),2)
 
     def test5_A(self):
         try:
-            node_list = [10,6,29,22,45,44,55,66,5,8,4]
+            node_list = [24,16,9,32,28,19,17]
             bst = self.insert(node_list)
             count_nodes = bst.count_nodes
         except:
             raise SkipTest
-        self.assertEqual(count_nodes(bst.Get_Root(),10),11)
+        self.assertEqual(count_nodes(bst.Get_Root(),9),1)
     
     def test6_A(self):
         try:
-            node_list = [10,6,29,22,45,44,55,66,5,8,4]
+            node_list =  [18,3,2,1,4,27,34]
             bst = self.insert(node_list)
             count_nodes = bst.count_nodes
         except:
             raise SkipTest
-        self.assertEqual(count_nodes(bst.Get_Root(),10),11)
+        self.assertEqual(count_nodes(bst.Get_Root(),18),7)
     
     def test7_A(self):
         try:
-            node_list = [10,6,29,22,45,44,55,66,5,8,4]
+            node_list =  [18,3,2,1,4,27,34]
             bst = self.insert(node_list)
             count_nodes = bst.count_nodes
         except:
             raise SkipTest
-        self.assertEqual(count_nodes(bst.Get_Root(),10),11)
+        self.assertEqual(count_nodes(bst.Get_Root(),3),4)
     
     def test8_A(self):
         try:
-            node_list = [10,6,29,22,45,44,55,66,5,8,4]
+            node_list =  [18,3,2,1,4,27,34]
             bst = self.insert(node_list)
             count_nodes = bst.count_nodes
         except:
             raise SkipTest
-        self.assertEqual(count_nodes(bst.Get_Root(),10),11)
+        self.assertEqual(count_nodes(bst.Get_Root(),27),2)
         
     def test9_A(self):
         try:
-            node_list = [10,6,29,22,45,44,55,66,5,8,4]
+            node_list =  [18,3,2,1,4,27,34]
             bst = self.insert(node_list)
             count_nodes = bst.count_nodes
         except:
             raise SkipTest
-        self.assertEqual(count_nodes(bst.Get_Root(),10),11)
+        self.assertEqual(count_nodes(bst.Get_Root(),34),1)
         
         
     def test10_A(self):
         try:
-            node_list = [10,6,29,22,45,44,55,66,5,8,4]
+            node_list =  [18,3,2,1,4,27,34]
             bst = self.insert(node_list)
             count_nodes = bst.count_nodes
         except:
             raise SkipTest
-        self.assertEqual(count_nodes(bst.Get_Root(),10),11)
+        self.assertEqual(count_nodes(bst.Get_Root(),14),0)
 
     def test1_B(self):
         try:
-            node_list = [10,6,29,22,45,44,55,66,5,8,4,54]
+            node_list = [24,16,9,32,28,19,17]
             bst = self.insert(node_list)
             left_most_node = bst.left_most_node
         except:
             raise SkipTest
-        self.assertEqual(left_most_node(bst.Get_Root()),4)
+        self.assertEqual(left_most_node(bst.Get_Root()),3)
 
     def test2_B(self):
         try:
-            node_list = [10,6,29,5]
+            node_list = [18,3,2,1,4,27,34]
+            bst = self.insert(node_list)
+            left_most_node = bst.left_most_node
+        except:
+            raise SkipTest
+        self.assertEqual(left_most_node(bst.Get_Root()),3)
+
+    def test3_B(self):
+        try:
+            node_list = [10]
+            bst = self.insert(node_list)
+            left_most_node = bst.left_most_node
+        except:
+            raise SkipTest
+        self.assertEqual(left_most_node(bst.Get_Root()),1)
+
+    def test4_B(self):
+        try:
+            node_list = [10,8]
+            bst = self.insert(node_list)
+            left_most_node = bst.left_most_node
+        except:
+            raise SkipTest
+        self.assertEqual(left_most_node(bst.Get_Root()),1)
+
+    def test5_B(self):
+        try:
+            node_list = [10,11]
+            bst = self.insert(node_list)
+            left_most_node = bst.left_most_node
+        except:
+            raise SkipTest
+        self.assertEqual(left_most_node(bst.Get_Root()),0)
+    
+    def test6_B(self):
+        try:
+            node_list =  [10,9,13,8,11]
             bst = self.insert(node_list)
             left_most_node = bst.left_most_node
         except:
             raise SkipTest
         self.assertEqual(left_most_node(bst.Get_Root()),2)
 
-    def test3_B(self):
-        try:
-            node_list = [10,6,29,22,45,44,55,66,5,8,4,54,56]
-            bst = self.insert(node_list)
-            left_most_node = bst.left_most_node
-        except:
-            raise SkipTest
-        self.assertEqual(left_most_node(bst.Get_Root()),5)
-
-    def test4_B(self):
-        try:
-            node_list = [10,6,29,5,28,27,26,25,24,23,22]
-            bst = self.insert(node_list)
-            left_most_node = bst.left_most_node
-        except:
-            raise SkipTest
-        self.assertEqual(left_most_node(bst.Get_Root()),8)
-
-    def test5_B(self):
-        try:
-            node_list = [20,15]
-            bst = self.insert(node_list)
-            left_most_node = bst.left_most_node
-        except:
-            raise SkipTest
-        self.assertEqual(left_most_node(bst.Get_Root()),1)
-    
-    def test6_B(self):
-        try:
-            node_list = [10,6,29,22,45,44,55,66,5,8,4,54]
-            bst = self.insert(node_list)
-            left_most_node = bst.left_most_node
-        except:
-            raise SkipTest
-        self.assertEqual(left_most_node(bst.Get_Root()),4)
-
     def test7_B(self):
         try:
-            node_list = [10,6,29,5]
+            node_list =  [10,13,18,12]
             bst = self.insert(node_list)
             left_most_node = bst.left_most_node
         except:
@@ -179,88 +179,88 @@ class Makar(unittest.TestCase):
 
     def test8_B(self):
         try:
-            node_list = [10,6,29,22,45,44,55,66,5,8,4,54,56]
+            node_list =  [78,79,34,28,14,32,80]
             bst = self.insert(node_list)
             left_most_node = bst.left_most_node
         except:
             raise SkipTest
-        self.assertEqual(left_most_node(bst.Get_Root()),5)
+        self.assertEqual(left_most_node(bst.Get_Root()),3)
 
     def test9_B(self):
         try:
-            node_list = [10,6,29,5,28,27,26,25,24,23,22]
+            node_list = [4,2,6,1,3,5,7]
             bst = self.insert(node_list)
             left_most_node = bst.left_most_node
         except:
             raise SkipTest
-        self.assertEqual(left_most_node(bst.Get_Root()),8)
+        self.assertEqual(left_most_node(bst.Get_Root()),2)
 
     def test10_B(self):
         try:
-            node_list = [20,15]
+            node_list = [10,15,20]
             bst = self.insert(node_list)
             left_most_node = bst.left_most_node
         except:
             raise SkipTest
-        self.assertEqual(left_most_node(bst.Get_Root()),1)
+        self.assertEqual(left_most_node(bst.Get_Root()),0)
         
     def test1_C(self):
         try:
-            node_list = [10,4,1,8,9,12]
+            node_list = [24,16,9,32,28,19,17]
             bst = self.insert(node_list)
             right_leaves = bst.right_leaves
         except:
             raise SkipTest
-        self.assertEqual(right_leaves(bst.Get_Root()),21)
+        self.assertEqual(right_leaves(bst.Get_Root()),0)
 
     def test2_C(self):
         try:
-            node_list = [8,5,6,20,10,12]
+            node_list = [18,3,2,1,4,27,34]
             bst = self.insert(node_list)
             right_leaves = bst.right_leaves
         except:
             raise SkipTest
-        self.assertEqual(right_leaves(bst.Get_Root()),18)
+        self.assertEqual(right_leaves(bst.Get_Root()),38)
 
     def test3_C(self):
         try:
-            node_list = [20,18,19,15,16,55]
+            node_list = [10]
             bst = self.insert(node_list)
             right_leaves = bst.right_leaves
         except:
             raise SkipTest
-        self.assertEqual(right_leaves(bst.Get_Root()),90)
+        self.assertEqual(right_leaves(bst.Get_Root()),0)
 
     def test4_C(self):
         try:
-            node_list = [50,65,60,62,45,46]
+            node_list = [10,8]
             bst = self.insert(node_list)
             right_leaves = bst.right_leaves
         except:
             raise SkipTest
-        self.assertEqual(right_leaves(bst.Get_Root()),108)
+        self.assertEqual(right_leaves(bst.Get_Root()),0)
 
     def test5_C(self):
         try:
-            node_list = [10,4,1,8,9]
+            node_list = [10,11]
             bst = self.insert(node_list)
             right_leaves = bst.right_leaves
         except:
             raise SkipTest
-        self.assertEqual(right_leaves(bst.Get_Root()),9)
+        self.assertEqual(right_leaves(bst.Get_Root()),11)
         
     def test6_C(self):
         try:
-            node_list = [10,4,1,8,9,12]
+            node_list = [10,9,13,8,11]
             bst = self.insert(node_list)
             right_leaves = bst.right_leaves
         except:
             raise SkipTest
-        self.assertEqual(right_leaves(bst.Get_Root()),21)
+        self.assertEqual(right_leaves(bst.Get_Root()),0)
 
     def test7_C(self):
         try:
-            node_list = [8,5,6,20,10,12]
+            node_list = [10,13,18,12]
             bst = self.insert(node_list)
             right_leaves = bst.right_leaves
         except:
@@ -269,43 +269,43 @@ class Makar(unittest.TestCase):
 
     def test8_C(self):
         try:
-            node_list = [20,18,19,15,16,55]
+            node_list = [78,79,34,28,14,32,80]
             bst = self.insert(node_list)
             right_leaves = bst.right_leaves
         except:
             raise SkipTest
-        self.assertEqual(right_leaves(bst.Get_Root()),90)
+        self.assertEqual(right_leaves(bst.Get_Root()),112)
 
     def test9_C(self):
         try:
-            node_list = [50,65,60,62,45,46]
+            node_list = [4,2,6,1,3,5,7]
             bst = self.insert(node_list)
             right_leaves = bst.right_leaves
         except:
             raise SkipTest
-        self.assertEqual(right_leaves(bst.Get_Root()),108)
+        self.assertEqual(right_leaves(bst.Get_Root()),10)
 
     def test10_C(self):
         try:
-            node_list = [10,4,1,8,9]
+            node_list = [10,15,20]
             bst = self.insert(node_list)
             right_leaves = bst.right_leaves
         except:
             raise SkipTest
-        self.assertEqual(right_leaves(bst.Get_Root()),9)
+        self.assertEqual(right_leaves(bst.Get_Root()),20)
     
     def test1_D(self):
         try:
-            node_list = [10,6,29,22,45,44,55,66,5,8,4,54]
+            node_list = [24,16,9,32,28,19,17]
             bst = self.insert(node_list)
             min_diff = bst.min_diff
         except:
             raise SkipTest
-        self.assertEqual(min_diff(bst.Get_Root()),1)
+        self.assertEqual(min_diff(bst.Get_Root()),2)
 
     def test2_D(self):
         try:
-            node_list = [10,6,29,5]
+            node_list = [18,3,2,1,4,27,34]
             bst = self.insert(node_list)
             min_diff = bst.min_diff
         except:
@@ -313,34 +313,34 @@ class Makar(unittest.TestCase):
         self.assertEqual(min_diff(bst.Get_Root()),1)
     def test3_D(self):
         try:
-            node_list = [20,15,25,11,14]
+            node_list = [10]
             bst = self.insert(node_list)
             min_diff = bst.min_diff
         except:
             raise SkipTest
-        self.assertEqual(min_diff(bst.Get_Root()),3)
+        self.assertEqual(min_diff(bst.Get_Root()),0)
 
     def test4_D(self):
         try:
-            node_list = [10,6,29,5,28,27,26,25,24,23,22]
+            node_list = [10,8]
+            bst = self.insert(node_list)
+            min_diff = bst.min_diff
+        except:
+            raise SkipTest
+        self.assertEqual(min_diff(bst.Get_Root()),2)
+
+    def test5_D(self):
+        try:
+            node_list = [10,11]
             bst = self.insert(node_list)
             min_diff = bst.min_diff
         except:
             raise SkipTest
         self.assertEqual(min_diff(bst.Get_Root()),1)
-
-    def test5_D(self):
-        try:
-            node_list = [9,5]
-            bst = self.insert(node_list)
-            min_diff = bst.min_diff
-        except:
-            raise SkipTest
-        self.assertEqual(min_diff(bst.Get_Root()),4)
     
     def test6_D(self):
         try:
-            node_list = [10,6,29,22,45,44,55,66,5,8,4,54]
+            node_list = [10,9,13,8,11]
             bst = self.insert(node_list)
             min_diff = bst.min_diff
         except:
@@ -349,7 +349,7 @@ class Makar(unittest.TestCase):
 
     def test7_D(self):
         try:
-            node_list = [10,6,29,5]
+            node_list = [10,13,18,12]
             bst = self.insert(node_list)
             min_diff = bst.min_diff
         except:
@@ -358,16 +358,16 @@ class Makar(unittest.TestCase):
         
     def test8_D(self):
         try:
-            node_list = [20,15,25,11,14]
+            node_list = [78,79,34,28,14,32,80]
             bst = self.insert(node_list)
             min_diff = bst.min_diff
         except:
             raise SkipTest
-        self.assertEqual(min_diff(bst.Get_Root()),3)
+        self.assertEqual(min_diff(bst.Get_Root()),1)
 
     def test9_D(self):
         try:
-            node_list = [10,6,29,5,28,27,26,25,24,23,22]
+            node_list =  [4,2,6,1,3,5,7]
             bst = self.insert(node_list)
             min_diff = bst.min_diff
         except:
@@ -376,12 +376,12 @@ class Makar(unittest.TestCase):
 
     def test10_D(self):
         try:
-            node_list = [9,5]
+            node_list = [10,15,20]
             bst = self.insert(node_list)
             min_diff = bst.min_diff
         except:
             raise SkipTest
-        self.assertEqual(min_diff(bst.Get_Root()),4)
+        self.assertEqual(min_diff(bst.Get_Root()),5)
         
 if __name__ == '__main__':
     kwargs = {

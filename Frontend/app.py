@@ -14,7 +14,46 @@ app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = 'root'
 app.config['MYSQL_DB'] = 'FLASK_CHECK'
 app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
-
+data_ = [{
+  "Name": "Faisal",
+  "Email": "p156058@nu.edu.pk",
+  "Task No": "1",
+  "Marks": "10"
+},
+ {
+  "Name": "Faisal",
+  "Email": "p156058@nu.edu.pk",
+  "Task No": "1",
+  "Marks": "20"
+}, {
+  "Name": "Faisal",
+  "Email": "p156058@nu.edu.pk",
+  "Task No": "1",
+  "Marks": "10"
+}]
+# other column settings -> http://bootstrap-table.wenzhixin.net.cn/documentation/#column-options
+columns = [
+  {
+    "field": "Name", # which is the field's name of data key 
+    "title": "Name", # display as the table header's name
+    "sortable": True,
+  },
+  {
+    "field": "Email",
+    "title": "Email",
+    "sortable": True,
+  },
+  {
+    "field": "Task No",
+    "title": "Task No",
+    "sortable": True,
+  },
+  {
+    "field": "Marks",
+    "title": "Marks",
+    "sortable": True,
+  }
+]
 @app.route('/')
 def home():
     return render_template('home.html')
@@ -49,7 +88,8 @@ def login():
         data = out.json()
         if data['authorize']:
             app.logger.info('TOKEN MATCHED')
-            return render_template('dashboard-t.html')
+            return render_template("tables.html",data=data_,columns=columns, title='Markar Grades')
+            #return render_template('dashboard-t.html')
         else:
             app.logger.info('INCORRECT TOKEN')
        
