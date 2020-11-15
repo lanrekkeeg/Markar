@@ -157,7 +157,7 @@ def validate_admin():
         if driver_Admin.auth:
             return flask.jsonify({"authorize":1})
         else:
-            return flask.jsonify("authorize":0)
+            return flask.jsonify({"authorize":0})
             
 @api.route('/RegisterStudent',methods=['POST'])
 def register_student():
