@@ -26,7 +26,6 @@ class Makar(unittest.TestCase):
     def test2_A(self):
         try:
             from cppyy.gbl import reverse_from_special_character
-            
         except:
             raise SkipTest
         self.assertEqual(reverse_from_special_character("ab/cdefsdssd",'/',0), "ba")

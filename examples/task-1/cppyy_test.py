@@ -4,11 +4,17 @@ cppyy.cppdef(code)
 
 from cppyy.gbl import List
 out = List()
-out.add_link_node_to_tail(12)
-out.add_link_node_to_tail(13)
+meth = out.add_link_node_to_tail
+meth(1)
+meth(2)
+meth(3)
+
+#out.add_link_node_to_tail(12)
+#out.add_link_node_to_tail(13)
 #out.add_link_node_to_tail(14)
 #out.add_link_node_to_tail(15)
-#out.print()
+out.print()
+'''
 #list_ = list()
 list_ = out.get_head()
 #for data in list_:
@@ -22,7 +28,6 @@ if list_ == cppyy.nullptr:
     print("null")
 else:
     print("not null")
-
 #head = out.get_head()
 #data = dict(head)
 #print(head.data)
@@ -30,3 +35,4 @@ else:
 #head = head.next
 #print(head)
 #assert out.sum(4,5) != 9
+'''

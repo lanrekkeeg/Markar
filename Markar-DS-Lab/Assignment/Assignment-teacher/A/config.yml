@@ -1,0 +1,10 @@
+COURSE:
+  code: cl-201
+  section: A
+CREDENTIAL:
+  email: p180030@nu.edu.pk
+  token: 98d725a6-5dcb-49e2-9f7a-566f7c40a445
+GRADER:
+  number: 1
+  type: Assignment
+URL: http://markar.faisalwork.net

@@ -13,22 +13,6 @@ app.config['MYSQL_PASSWORD'] = 'root'
 app.config['MYSQL_DB'] = 'FLASK_CHECK'
 app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 
-
-def get_connection():
-    try:
-        db_con = mysql.connector.connect(user='root', password='root',host='127.0.0.1',database='FLASK_CHECK')
-    except mysql.connector.Error as err:
-        app.logger.debug("Error")
-        if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
-            print("Something is wrong with your user name or password")
-        elif err.errno == errorcode.ER_BAD_DB_ERROR:
-            print("Database does not exist")
-        else:
-            print(err)
-    else:
-        app.logger.info("Created successfully")
-        return db_con
-
 @app.route('/')
 def home():
     return render_template('home.html')
@@ -60,9 +44,6 @@ def login():
     if request.method == 'POST':
         email = request.form['email']
         tokendb = request.form['token']
-        db_con = get_connection()
-        cur = db_con.cursor()
-
         result = cur.execute("SELECT * FROM ADMIN WHERE EMAIL = %s", (email,))
         app.logger.info("Email:{}".format(email))
 

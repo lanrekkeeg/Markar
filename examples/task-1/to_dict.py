@@ -14,7 +14,7 @@ def dictify(r,root=True):
         d[x.tag].append(dictify(x,False))
     return d
 
-file_ = open("results.xml",'r').read().strip()
+file_ = open("report2.xml",'r').read().strip()
 root = ET.fromstring(file_)
         #print(file_)
 out = dictify(root)

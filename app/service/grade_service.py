@@ -135,7 +135,7 @@ class GradeService:
         i = 1
         score = 0
         for ds in test_cases['testcase']:
-            if ds.get("failure",None) is not None:
+            if ds.get("failure",None) is not None or ds.get("skipped", None) is not None:
                 test_output = {"TestName":ds['name'],"outcome": "FAIL"}
                 REPORT.append(test_output)
                 #REPORT += "***Test-Case-{0}    outcome:{1}    AssertError:{2}**** \n \n"\

@@ -1,0 +1,23 @@
+<testsuites>
+	<testsuite name="OutcomesTest-20201114215024" tests="5" file=".py" time="0.016" timestamp="2020-11-14T21:50:24" failures="2" errors="0" skipped="1">
+		<testcase classname="OutcomesTest" name="test_func2" time="0.008"/>
+		<testcase classname="OutcomesTest" name="test_func3" time="0.001"/>
+		<testcase classname="OutcomesTest" name="test_func4" time="0.001">
+			<failure type="AssertionError" message="">Traceback (most recent call last):
+  File "last_test.py", line 39, in test_func4
+    assert compute_sum(1,3) == 8
+AssertionError
+</failure>
+		</testcase>
+		<testcase classname="OutcomesTest" name="test_func5" time="0.000">
+			<failure type="AssertionError" message="">Traceback (most recent call last):
+  File "last_test.py", line 42, in test_func5
+    assert compute_sum(1,3) == 9
+AssertionError
+</failure>
+		</testcase>
+		<testcase classname="OutcomesTest" name="test_func1" time="0.005">
+			<skipped type="skip" message=""/>
+		</testcase>
+	</testsuite>
+</testsuites>

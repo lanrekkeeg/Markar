@@ -58,9 +58,6 @@ class Makar(unittest.TestCase):
             raise SkipTest
         self.assertEqual(count_after_specific("111123112322311232000230",2,3,0), 5)
 
-        
-
-
     def test2_B(self):
         try:
             from cppyy.gbl import count_after_specific

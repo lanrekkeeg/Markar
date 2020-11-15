@@ -2,8 +2,8 @@ COURSE:
   code: cl-201
   section: B
 CREDENTIAL:
-  email: null
-  token: null
+  email: p190007@nu.edu.pk
+  token: b6a7d2e1-4def-4fdc-90f6-806033c2e4ec
 GRADER:
   number: 1
   type: Task
