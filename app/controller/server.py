@@ -140,6 +140,25 @@ def add_task():
     #driver.driver_function()
     return flask.jsonify({"output":driver.output})
 
+
+@api.route('/ValidateAdmin',methods=['POST'])
+def validate_admin():
+    """Register user in database"""
+    try:
+        data = request.get_json()
+        #driver_Admin = None
+    except Exception as e:
+        logging.error("error in decoding data coming through request, the error message is {}".format(str(e)))
+    if request.headers.get("authorization") is not None:
+        # validating admin
+        logging.debug("Token is {}".format(request.headers.get("authorization")))
+        driver_Admin = Main(service="db", log=logging, email=data['admin_email'],token=request.headers.get("authorization"), user_type="ADMIN", operation="validate")
+        driver_Admin.driver_function()
+        if driver_Admin.auth:
+            return flask.jsonify({"authorize":1})
+        else:
+            return flask.jsonify("authorize":0)
+            
 @api.route('/RegisterStudent',methods=['POST'])
 def register_student():
     """Register user in database"""

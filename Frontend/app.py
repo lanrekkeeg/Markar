@@ -4,6 +4,7 @@ from wtforms import Form, StringField, TextAreaField, PasswordField, validators
 from passlib.hash import sha256_crypt
 import mysql.connector
 from mysql.connector import errorcode
+from config import *
 
 app = Flask(__name__)
 
@@ -33,21 +34,13 @@ def dasht():
 def dashs():
     return render_template('dashboard-s.html')
 
-# class LoginForm(Form):
-#     email = StringField('Email', [validators.Length(min=17, max=17)])
-#     token = PasswordField('Password', [validators.DataRequired()])
-
-
 @app.route('/login', methods=['GET','POST'])
 def login():
     #form = LoginForm(request.form)
     if request.method == 'POST':
         email = request.form['email']
         tokendb = request.form['token']
-        result = cur.execute("SELECT * FROM ADMIN WHERE EMAIL = %s", (email,))
-        app.logger.info("Email:{}".format(email))
-
-        data = cur.fetchone()
+        data = {}
 
         if data is not None:
             token = data[1]
