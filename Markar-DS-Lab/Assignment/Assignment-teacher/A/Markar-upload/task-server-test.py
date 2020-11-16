@@ -144,7 +144,7 @@ class Makar(unittest.TestCase):
             left_most_node = bst.left_most_node
         except:
             raise SkipTest
-        self.assertEqual(left_most_node(bst.Get_Root()),1)
+        self.assertEqual(left_most_node(bst.Get_Root()),0)
 
     def test4_B(self):
         try:
