@@ -1,6 +1,13 @@
 <testsuites>
-	<testsuite name="OutcomesTest-20201103191513" tests="2" file=".py" time="0.016" timestamp="2020-11-03T19:15:13" failures="0" errors="0" skipped="0">
-		<testcase classname="OutcomesTest" name="test_func1" time="0.016"/>
+	<testsuite name="OutcomesTest-20201119153530" tests="3" file=".py" time="0.016" timestamp="2020-11-19T15:35:30" failures="1" errors="0" skipped="0">
+		<testcase classname="OutcomesTest" name="test_func1" time="0.015"/>
 		<testcase classname="OutcomesTest" name="test_sum" time="0.000"/>
+		<testcase classname="OutcomesTest" name="test_func3" time="0.000">
+			<failure type="AssertionError" message="None">Traceback (most recent call last):
+  File "unittest_.py", line 33, in test_func3
+    self.fail()
+AssertionError: None
+</failure>
+		</testcase>
 	</testsuite>
 </testsuites>

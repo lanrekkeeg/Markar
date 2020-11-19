@@ -1,5 +1,5 @@
 <testsuites>
-	<testsuite name="OutcomesTest-20201114215024" tests="5" file=".py" time="0.016" timestamp="2020-11-14T21:50:24" failures="2" errors="0" skipped="1">
+	<testsuite name="OutcomesTest-20201119153412" tests="5" file=".py" time="0.015" timestamp="2020-11-19T15:34:12" failures="2" errors="0" skipped="1">
 		<testcase classname="OutcomesTest" name="test_func2" time="0.008"/>
 		<testcase classname="OutcomesTest" name="test_func3" time="0.001"/>
 		<testcase classname="OutcomesTest" name="test_func4" time="0.001">

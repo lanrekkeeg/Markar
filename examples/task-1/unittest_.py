@@ -29,7 +29,8 @@ class OutcomesTest(unittest.TestCase):
     def d_test_func2(self):
         assert compute_sum(1,6) == 21
 
-    def d_test_func3(self):
+    def test_func3(self):
+        self.fail()
         assert compute_sum(1,3) == 6
 
 if __name__ == '__main__':

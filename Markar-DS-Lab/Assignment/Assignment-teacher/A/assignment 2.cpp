@@ -1,42 +1,39 @@
 #include<iostream>
 using namespace std;
-
 struct node {
 	int data;
 	node *left;
 	node *right;
 };
-
-class BST {
-
+class BST {​
 private:
 	node *root;
-
+​
 public:
     BST() {
 		root = NULL;
 		
 	}
-
+​
 	bool check_left(node *temp) {
 		if (temp->left == NULL) {
 			return true;
 		}
 		else return false;
 	}
-
+​
 	bool check_right(node *temp) {
 		if (temp->right == NULL)
 			return true;
 		else return false;
 	}
-
+​
 	bool is_greater(int val, int val_1) {
 		if (val > val_1)
 			return true;
 		else return false;
 	}
-
+​
 	node* Create(int data) {
 		node *Node = new node();
 		Node->data = data;
@@ -44,7 +41,7 @@ public:
 		Node->right == NULL;
 		return Node;
 	}
-
+​
 	void Insertion(node *temp, int data) {
 		if (root == NULL) {
 			root = Create(data);
@@ -56,7 +53,7 @@ public:
 				return;
 			}
 			else Insertion(temp->left, data);
-
+​
 		}
 		else {
 			if (check_right(temp)) {
@@ -67,13 +64,13 @@ public:
 			}
 			else Insertion(temp->right, data);
 		}
-
+​
 	}
-
+​
 	node *Get_Root() {
 		return root;
 	}
-
+​
 	void print(node *temp) {
 		if (temp == NULL)
 			return;
@@ -81,10 +78,10 @@ public:
 		cout << temp->data << " ";
 		print(temp->right);
 	}
-
+​
   
     // ***************Part A*******************
-
+​
 	int mixture(node *iter)
 	{
      if (iter == NULL)
@@ -95,19 +92,19 @@ public:
 	 {
 		 return (mixture(iter->left) + 1 + mixture(iter->right)); 
 	 }
-
+​
 	}
-
+​
 //main Function ... 
     int count_nodes(node* iter, int val, int count=0){
     
-
+​
 		 if (iter->data < val)
 		{  
 			return count_nodes(iter->right,val,count);
 		 
 		}
-
+​
 		if (iter->data > val)
 		{ 
 			return count_nodes(iter->left,val,count);
@@ -119,29 +116,29 @@ public:
               count++;
 			   
               return mixture(iter);
-
+​
 		}
               
         return count;
 		cout<<endl;
 		
     }
-
+​
  // Part A END
-
+​
    // ****************Part-B********************
-
+​
 int check_leaf_left(node *temp)
 {
 	int left ,right;
-
+​
    if (temp == NULL )
    {
 	   return 0; //break point
    }
 	   
   left=check_leaf_left(temp->left);
-
+​
  right=check_leaf_left(temp->right);
   
 //to choose only greater.. 
@@ -154,7 +151,7 @@ int check_leaf_left(node *temp)
 {
 	return left+1;
 }
-
+​
 }
     int left_most_node(node *root_iter)
 	{ 
@@ -163,10 +160,10 @@ int check_leaf_left(node *temp)
 			return 0;
 	 	}
 		    else 
-
+​
 		 {
        	return check_leaf_left(root_iter)-1;
-
+​
 		 }
     }
 	
@@ -175,7 +172,7 @@ int check_leaf_left(node *temp)
     int right_leaves(node *root_iter)
 	{
 	   int add_r=0;	   
-
+​
                if (root_iter->right != NULL) 
 		    { 
 				if (root_iter->right->left == NULL && root_iter->right->right == NULL)
@@ -187,12 +184,12 @@ int check_leaf_left(node *temp)
 			    if (root_iter->left != NULL)
              {
 	            add_r+= right_leaves(root_iter->left);
-
+​
                }			
            return add_r;
     } 
-
-
+​
+​
     // *********************PART-D******************
     int min_diff(node *root_iter,int diff=0){
         // YOUR CODE HERE
@@ -211,7 +208,7 @@ int check_leaf_left(node *temp)
 					diff = root_iter->data  - root_iter->left->data;
 			   
                    diff= min_diff(root_iter->left, diff);
-
+​
 		   }
 		   		   
 		     if (root_iter->right != NULL) //case 2 only right leaf 
@@ -224,14 +221,10 @@ int check_leaf_left(node *temp)
 			   
 			   	  diff=  min_diff(root_iter->right,diff);
 		   }	
-
-		   return diff;	   
-
+		   return diff;​
 	}  
 
- 
 };
-
 int main() {
 	BST bst;
 	bst.Insertion(bst.Get_Root(), 10);
@@ -243,13 +236,12 @@ int main() {
     bst.Insertion(bst.Get_Root(), 24);
     bst.Insertion(bst.Get_Root(), 13);
     
-/*
-	bst.print(bst.Get_Root());
-	cout<<endl;
-	cout<<bst.count_nodes(bst.Get_Root(),10,0);
-	cout<<bst.left_most_node(bst.Get_Root());
-	cout<<bst.right_leaves(bst.Get_Root());
-	cout<<bst.min_diff(bst.Get_Root(),0);
-	cout<<endl;
-	*/
+​
+    bst.print(bst.Get_Root());
+  cout<<endl;
+  cout<<bst.count_nodes(bst.Get_Root(),10,0);
+  cout<<bst.left_most_node(bst.Get_Root());
+  cout<<bst.right_leaves(bst.Get_Root());
+  cout<<bst.min_diff(bst.Get_Root(),0);
+cout<<endl;
 }
